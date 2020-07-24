@@ -1,0 +1,9 @@
+﻿@page "/student/{id:guid}"
+@attribute [Authorize]
+<h3>Profile</h3>
+
+@code {
+    public Guid Id { get; set; }
+
+
+}
