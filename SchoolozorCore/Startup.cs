@@ -12,14 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Schoolozor.Services.Authentication.Services;
 using Schoolozor.Model;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Schoolozor.Services.Authentication.Controller;
-using Schoolozor.Services.Authentication.Controllers;
 using Newtonsoft.Json.Serialization;
+using Schoolozor.Services.Authentication.Services;
 
 namespace SchoolozorCore
 {
