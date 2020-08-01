@@ -1,0 +1,54 @@
+﻿@model DataTableModel
+@{ 
+    var tableId = Guid.NewGuid().ToString();
+}
+
+<div class="box">
+    <div class="box-body table-responsive">
+        <table class="table table-bordered table-hover" id="@tableId" cellspacing="0" align="center">
+            <thead>
+                <tr>
+                    @foreach (var h in Model.Headers)
+                    {
+                    <th>@h.Label</th>
+                    }
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<environment names="Development">
+    <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.css" asp-append-version="true" />
+</environment>
+<environment names="Staging,Production">
+    <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.min.css" asp-append-version="true" />
+</environment>
+
+<environment names="Development">
+    <script src="~/lib/datatables/js/jquery.dataTables.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js" asp-append-version="true"></script>
+    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+</environment>
+<script>
+    $(document).ready(function () {
+        var cols = [];
+        @foreach (var c in Model.Headers)
+        {
+            @:cols.push("@c.Field");
+        }
+
+
+        dataTable.options.ctrlId = "@tableId";
+        dataTable.options.columns = cols;
+        dataTable.options.url = '@Model.DataUrl';
+        dataTable.generate();
+        //dataTable.addButton('Create', function () { alert('aa'); });
+    });
+</script>

@@ -50,7 +50,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\js\pages\" />
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 
   <ItemGroup>

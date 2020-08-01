@@ -19,7 +19,15 @@ namespace SchoolozorCore.Common
             Register,
             SuperAdmin,
             Role,
-            UserLogs
+            UserLogs,
+
+            Students,
+            Profile,
+
+            Academic_Activities,
+            Users,
+            
+
         }
 
         public static SidebarMenu AddHeader(string name)
