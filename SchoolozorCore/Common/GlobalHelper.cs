@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
-using System.Linq.Expressions;
+using Schoolozor.Shared;
+using NUglify.Html;
 
 namespace SchoolozorCore.Common
 {
@@ -45,8 +47,28 @@ namespace SchoolozorCore.Common
             // Apply pagination.
             data = data.Skip(startRec).Take(pageSize).ToList();
 
+            var finalData = new List<Dictionary<string, object>>();
+            foreach (var item in data)
+            {
+                //TODO: When you add a new data formatting here, make sure to add also in dataTable.js Ln 24
+                var expObj = new Dictionary<string, object>();
+                foreach (var p in item.GetType().GetProperties())
+                {
+                    expObj.Add(p.Name.ToCamelCase(), p.GetValue(item));
+                    if (p.PropertyType.BaseType == typeof(Enum))
+                    {
+                        expObj.Add(p.Name.ToCamelCase() + "Desc", p.GetValue(item).ToString());
+                    }
+                    else if (p.PropertyType == typeof(DateTimeOffset))
+                    {
+                        expObj.Add(p.Name.ToCamelCase() + "Desc", DateTime.Parse(p.GetValue(item).ToString()).ToString("MMM d, yyyy HH:mm:ss"));
+                    }
+                }
+                finalData.Add(expObj);
+            }
+
             // Loading drop down lists.
-            var result = controller.Json(new { draw = Convert.ToInt32(draw), recordsTotal = totalRecords, recordsFiltered = recFilter, data = data });
+            var result = controller.Json(new { draw = Convert.ToInt32(draw), recordsTotal = totalRecords, recordsFiltered = recFilter, data = finalData });
             return result;
         }
 

@@ -8,3 +8,4 @@
 /// <reference path="lib/jquery-validation/jquery.validate.js" />
 /// <reference path="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
 /// <reference path="lib/pace/pace.js" />
+/// <reference path="lib/momentjs/moment.js" />

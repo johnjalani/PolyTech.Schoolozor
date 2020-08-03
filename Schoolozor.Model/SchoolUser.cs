@@ -4,6 +4,7 @@ using Microsoft.JSInterop;
 using Schoolozor.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace Schoolozor.Model
         {
             get
             {
-                return $"{FirstName.ToProper()} {(!string.IsNullOrEmpty(MiddleName) ? MiddleName.ToProper().Substring(0, 1) : string.Empty)} {LastName.ToProper()}";
+                return $"{FirstName.ToProperCase()} {(!string.IsNullOrEmpty(MiddleName) ? MiddleName.ToProperCase().Substring(0, 1) : string.Empty)} {LastName.ToProperCase()}";
             }
         }
         public UserType Type { get; set; }

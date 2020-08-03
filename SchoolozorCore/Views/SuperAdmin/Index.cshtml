@@ -38,9 +38,9 @@
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
                     <td>
-                        <a class="btn btn-success" asp-controller="SuperAdmin" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
-                        <a class="btn btn-success" asp-controller="SuperAdmin" asp-action="ChangePassword" asp-route-id="@user.Id">Change Password</a>
-                        <a class="btn btn-danger btn-delete" asp-controller="SuperAdmin" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                        <a class="btn btn-success btn-sm" asp-controller="SuperAdmin" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                        <a class="btn btn-success btn-sm" asp-controller="SuperAdmin" asp-action="ChangePassword" asp-route-id="@user.Id">Change Password</a>
+                        <a class="btn btn-danger btn-delete btn-sm" asp-controller="SuperAdmin" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
                     </td>
                 </tr>
             }

@@ -35,24 +35,31 @@
       "destination": "wwwroot/lib/fastclick/"
     },
     {
-      "library": "font-awesome@5.10.0-11",
+      "library": "font-awesome@5.14.0",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "moment.js@2.27.0",
+      "destination": "wwwroot/lib/momentjs/"
+    },
+    {
+      "library": "feather-icons@4.28.0",
+      "destination": "wwwroot/lib/featherIcons/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "admin-lte@3.0.0-beta.1",
+      "destination": "wwwroot/lib/admin-lte/",
+      "files": [
+        "dist/css/adminlte.css",
+        "dist/css/adminlte.css.map",
+        "dist/css/adminlte.min.css",
+        "dist/js/adminlte.js",
+        "dist/js/adminlte.js.map",
+        "dist/js/adminlte.min.js",
+        "dist/js/adminlte.min.js.map",
+        "dist/img/AdminLTELogo.png"
+      ]
     }
-  ,
-{
-  "provider": "jsdelivr",
-  "library": "admin-lte@3.0.0-beta.1",
-  "destination": "wwwroot/lib/admin-lte/",
-  "files": [
-    "dist/css/adminlte.css",
-    "dist/css/adminlte.css.map",
-    "dist/css/adminlte.min.css",
-    "dist/js/adminlte.js",
-    "dist/js/adminlte.js.map",
-    "dist/js/adminlte.min.js",
-    "dist/js/adminlte.min.js.map",
-    "dist/img/AdminLTELogo.png"
   ]
-}
-]
 }

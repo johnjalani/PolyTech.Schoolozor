@@ -19,33 +19,25 @@ namespace SchoolozorCore.ViewComponents
             //you can do the access rights checking here by using session, user, and/or filter parameter
             var sidebars = new List<SidebarMenu>();
 
-            //if (((ClaimsPrincipal)User).GetUserProperty("AccessProfile").Contains("VES_008, Payroll"))
-            //{
-            //}
-
-            sidebars.Add(ModuleHelper.AddHeader("MAIN NAVIGATION"));
-            sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Home));
-            
-            //sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Contact, Tuple.Create(1, 0, 0)));
-            sidebars.Add(ModuleHelper.AddTree("Admin"));
-            sidebars.Last().TreeChild = new List<SidebarMenu>()
-            {
-                ModuleHelper.AddModule(ModuleHelper.Module.Login),
-                ModuleHelper.AddModule(ModuleHelper.Module.Register, Tuple.Create(1, 1, 1)),
-            };
-
-            
+            sidebars.Add(ModuleHelper.AddModule("Home", "/", "fas fa-home"));
 
             if (User.IsInRole("SuperAdmins"))
             {
-                sidebars.Add(ModuleHelper.AddTree("Administration"));
-                sidebars.Last().TreeChild = new List<SidebarMenu>()
-                {
-                    ModuleHelper.AddModule(ModuleHelper.Module.SuperAdmin),
-                    ModuleHelper.AddModule(ModuleHelper.Module.Role),
-                };
-                sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.UserLogs));
+                //sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.SuperAdmin));
+                //sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Role));
+                //sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.UserLogs));
+
+                sidebars.Add(ModuleHelper.AddModule("Admin", "/superadmin", "fas fa-user-cog"));
+                sidebars.Add(ModuleHelper.AddModule("Role", "/role", "fas fa-key"));
+                sidebars.Add(ModuleHelper.AddModule("Logs", "/userlogs", "fas fa-clipboard-list"));
             }
+
+            //sidebars.Add(ModuleHelper.AddTree("Admin"));
+            //sidebars.Last().TreeChild = new List<SidebarMenu>()
+            //{
+            //    ModuleHelper.AddModule(ModuleHelper.Module.Login),
+            //    ModuleHelper.AddModule(ModuleHelper.Module.Register, Tuple.Create(1, 1, 1)),
+            //};
 
             return View(sidebars);
         }

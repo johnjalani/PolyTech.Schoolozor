@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Schoolozor.Model;
+using Schoolozor.Model.ViewModel;
+using SchoolozorCore.Common;
 
 namespace SchoolozorCore.Controllers
 {
     [Authorize(Roles = "SuperAdmins")]
-    public class UserLogsController : Controller
+    public class UserLogsController : BaseController
     {
         private readonly SchoolContext _context;
 
@@ -24,7 +26,13 @@ namespace SchoolozorCore.Controllers
         // GET: /<controller>/
         public ViewResult Index()
         {
-            return View(_context.UserAuditEvents.ToList());
+            AddPageHeader("Logs", "");
+            return View();
+        }
+
+        public ActionResult GetData()
+        {
+            return this.BuildDataTableForm<UserAudit>(_context.UserAuditEvents.ToList());
         }
     }
 }

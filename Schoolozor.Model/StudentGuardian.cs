@@ -26,7 +26,7 @@ namespace Schoolozor.Model
         {
             get
             {
-                return $"{FirstName.ToProper()} {(!string.IsNullOrEmpty(MiddleName) ? MiddleName.ToProper().Substring(0, 1) : string.Empty)} {LastName.ToProper()}";
+                return $"{FirstName.ToProperCase()} {(!string.IsNullOrEmpty(MiddleName) ? MiddleName.ToProperCase().Substring(0, 1) : string.Empty)} {LastName.ToProperCase()}";
             }
         }
         public DateTime DOB { get; set; }

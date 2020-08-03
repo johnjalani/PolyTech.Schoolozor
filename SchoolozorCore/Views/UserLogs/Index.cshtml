@@ -1,63 +1,13 @@
-﻿<link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.min.css" asp-append-version="true" />
-<script src="~/lib/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
-<script src="~/lib/datatables/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+﻿@{ ViewData["Title"] = "User Logs"; }
+@{ var model = new DataTableModel();
+    model.Headers = new List<DataTableHeaders>();
+    model.Headers.Add(new DataTableHeaders() { Label = "UserAuditId", Field = "UserAuditId" });
+    model.Headers.Add(new DataTableHeaders() { Label = "UserId", Field = "UserId" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Timestamp", Field = "Timestamp:datetime" });
+    model.Headers.Add(new DataTableHeaders() { Label = "AuditEvent", Field = "AuditEvent:enum" });
+    model.Headers.Add(new DataTableHeaders() { Label = "IpAddress", Field = "IpAddress" });
+    model.DataUrl = "/UserLogs/GetData";
+    }
 
-@model System.Collections.Generic.IEnumerable<UserAudit>
+@await Component.InvokeAsync("DataTable", model)
 
-@{
-    ViewData["Title"] = "User Logs";
-}
-
-<h2>@ViewData["Title"].</h2>
-
-<br>
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserAuditId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Timestamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AuditEvent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IpAddress)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserAuditId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuditEvent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IpAddress)
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-
-<script>
-    $(document).ready(function () {
-        $('#myTable').DataTable({
-            "lengthMenu": [[50, 75, 150, -1], [50, 75, 150, "All"]]
-        });
-    });
-</script>

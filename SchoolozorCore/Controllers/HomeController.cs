@@ -16,6 +16,12 @@ namespace SchoolozorCore.Controllers
         public IActionResult Index()
         {
             AddPageHeader("Dashboard", "");
+            AddBreadcrumb("Student", "");
+            AddBreadcrumb("Jose Rizal", "");
+            AddPageAlerts(PageAlertType.Info, "You can also use our school activity templates");
+            AddPageAlerts(PageAlertType.Error, "You can also use our school activity templates");
+            AddPageAlerts(PageAlertType.Warning, "You can also use our school activity templates");
+            AddPageAlerts(PageAlertType.Success, "You can also use our school activity templates");
             return View();
         }
 

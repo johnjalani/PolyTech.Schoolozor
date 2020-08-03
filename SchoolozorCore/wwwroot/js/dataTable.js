@@ -19,29 +19,44 @@
         var cols = [];
         var colDefinitions = [];
         for (var i = 0; i < this.options.columns.length; i++) {
+            //TODO: When you add a new data formatting here, make sure to add also in GlobalHelpers.cs Ln 54
             var def = this.options.columns[i].split(':');
             if (def.length > 1) {
-                colDefinitions.push({
-                    "className": def[1], "targets": [i]
-                });
+                if ('enum,datetime'.indexOf(def[1]) > -1) {
+                    def[0] = def[0] + 'Desc';
+                }
+                else {
+                    colDefinitions.push({
+                        "className": def[1], "targets": [i]
+                    });
+                }
                 this.options.columns[i] = def[0];
             }
             cols.push({
                 "data": this.options.columns[i]
             });
         }
+        var isServerSide = false;
+        var ajax = '';
+        if (this.options.url !== null) {
+            isServerSide = true;
+            ajax = {
+                "url": this.options.url,
+                "type": "POST",
+                "dataType": "JSON",
+                //"success": function (data) {
+                //    var x = data;
+                //}
+            };
+        }
+
         $('#' + this.options.ctrlId).DataTable({
             "columnDefs": colDefinitions,
             "lengthChange": false,
-            "ajax":
-            {
-                "url": this.options.url,
-                "type": "POST",
-                "dataType": "JSON"
-            },
+            "ajax": ajax,
             "columns": cols,
             "processing": true,
-            "serverSide": true,
+            "serverSide": isServerSide,
             "language":
             {
                 "processing": "<div class=''><i class='fa fa-cog fa-spin site-loader-color'></i></div>"
@@ -50,7 +65,7 @@
         });
     },
     addButton: function (label, action) {
-        $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success' onclick='"+ action +"'>"+ label +"</button>");
+        $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success' onclick='" + action + "'>" + label + "</button>");
     }
 }
 

@@ -5,9 +5,9 @@
 
 <div class="box">
     <div class="box-body table-responsive">
-        <table class="table table-bordered table-hover" id="@tableId" cellspacing="0" align="center">
+        <table class="table table-striped jambo_table table-hover" id="@tableId" cellspacing="0" align="center">
             <thead>
-                <tr>
+                <tr class="headings">
                     @foreach (var h in Model.Headers)
                     {
                     <th>@h.Label</th>
