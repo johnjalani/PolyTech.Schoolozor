@@ -3,7 +3,7 @@
 @model LoginViewModel
 @inject SignInManager<SchoolUser> SignInManager
 
-@{ ViewData["Title"] = "Confirm Email";
+@{ ViewData["Title"] = "Success Registration";
     Layout = ""; }
 
 <!DOCTYPE html>
@@ -49,11 +49,14 @@
                                 <h1 class="">SCHOOLAZOR</h1>
                             </div>
                             <div>
-                                <h3>Email Confirmed</h3>
+                                <h3>Registration Complete</h3>
+                            </div>
+                            <div>
+                                <h3>Please check your email for confirmation.</h3>
                             </div>
                             <hr />
                             <div>
-                                <h3><a href="/account/login">Clicked here to login</a></h3>
+                                <h3>Already confirmed? <a href="/account/login">Login here</a></h3>
                             </div>
                         </div>
                     </div>

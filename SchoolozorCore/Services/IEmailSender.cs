@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Schoolozor.Shared;
+using System.Threading.Tasks;
 
 namespace SchoolozorCore.Services
 {

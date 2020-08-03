@@ -1,17 +1,17 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SchoolozorCore.Services;
-using SchoolozorCore.Common;
-using System;
 using Schoolozor.Model;
 using Schoolozor.Model.ViewModel;
 using Schoolozor.Shared;
+using SchoolozorCore.Services;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace SchoolozorCore.Controllers
 {
@@ -20,22 +20,28 @@ namespace SchoolozorCore.Controllers
     {
         private readonly UserManager<SchoolUser> _userManager;
         private readonly SignInManager<SchoolUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        
+        private readonly SchoolContext _context;
+
         public AccountController(
             UserManager<SchoolUser> userManager,
             SignInManager<SchoolUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            SchoolContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _context = context;
         }
 
         //
@@ -107,37 +113,56 @@ namespace SchoolozorCore.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new SchoolUser
+                using (var trans = _context.Database.BeginTransaction())
                 {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    //extended properties
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                   
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                    // Send an email with this link
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
+                    var school = new SchoolProfile
+                    {
+                        Id = Guid.NewGuid(),
+                        ContactNumber = model.ContactNumber,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Name = model.SchoolName
+                    };
+                    var schoolResult = await _context.SchoolProfile.AddAsync(school);
+                    var user = new SchoolUser
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        //extended properties
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        School = schoolResult.Entity
+                    };
+                    var result = await _userManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user, "SuperAdmins");
 
-                    await _userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.GivenName, user.FirstName));
-                    await _userManager.AddClaimAsync(user, new Claim(CustomClaimTypes.Surname, user.LastName));                    
+                        // Send an email with this link
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                        await _emailSender.SendEmailAsync(model.Email, "Confirm your account", $"Please confirm your account by clicking this: <a href='{callbackUrl}'>link</a>");
 
-                    return RedirectToLocal(returnUrl);
+                        _logger.LogInformation(3, "User created a new account with password.");
+                        trans.Commit();
+                        return RedirectToAction(nameof(SuccessRegister));
+                    }
+                    AddErrors(result);
+                    
                 }
-                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //
+        // GET: /Account/SuccessRegister
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult SuccessRegister()
+        {
+            return View();
         }
 
         //

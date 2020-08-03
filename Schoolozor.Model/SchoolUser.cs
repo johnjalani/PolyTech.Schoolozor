@@ -31,6 +31,9 @@ namespace Schoolozor.Model
             }
         }
         public UserType Type { get; set; }
+        [NotMapped]
         public string Token { get; set; }
+        public SchoolProfile School { get; set; }
+
     }
 }
