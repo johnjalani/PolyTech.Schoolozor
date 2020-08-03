@@ -16,6 +16,7 @@ using Schoolozor.Model;
 using System.Text;
 using Newtonsoft.Json.Serialization;
 using Schoolozor.Services.Authentication.Services;
+using Schoolozor.Shared;
 
 namespace SchoolozorCore
 {
@@ -46,8 +47,13 @@ namespace SchoolozorCore
             string connString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SchoolContext>(options => options.UseNpgsql(connString));
 
-            services.AddIdentity<SchoolUser, IdentityRole>()
+            services.AddIdentity<SchoolUser, IdentityRole>(o=> {
+                o.SignIn.RequireConfirmedEmail = true;
+                o.User.RequireUniqueEmail = true;
+                o.Password.RequiredLength = 8;
+            })
              .AddEntityFrameworkStores<SchoolContext>()
+             .AddRoleManager<RoleManager<IdentityRole>>()
              .AddDefaultTokenProviders();
 
             services.AddScoped<IUserClaimsPrincipalFactory<SchoolUser>, SchoolClaimsPrincipalFactory>();
@@ -67,14 +73,12 @@ namespace SchoolozorCore
             {
                 options.LoginPath = new PathString("/Account/Login");
             });
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-            //services.AddScoped<ILoginService, LoginService>();
-            //services.AddScoped<IRegisterService, RegisterService>();
-            //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<SecurityServices>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();            
+            services.AddTransient<Email>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

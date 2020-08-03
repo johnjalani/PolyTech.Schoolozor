@@ -1,57 +1,150 @@
 ﻿@model RegisterViewModel
-@{
-    ViewData["Title"] = "Register";
-}
+@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
 
-<h2>@ViewData["Title"].</h2>
+@{ ViewData["Title"] = "Register";
+    Layout = ""; }
 
-<form id="ccSelectForm" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Create a new account.</h4>
-    <hr />
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="FirstName" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="FirstName" class="form-control"/>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="LastName" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="LastName" class="form-control" />
-            <span asp-validation-for="LastName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Register</button>
-        </div>
-    </div>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Schoolozor | Login</title>
+    <link rel="icon" type="image/png" href="~/images/schoolozorFavicon.png">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+        <link rel="stylesheet" href="~/lib/ionicons/css/ionicons.css" />
 
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}
+        <link rel="stylesheet" href="~/css/animation.css" />
+        <link rel="stylesheet" href="~/css/login.css" />
 
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/ionicons/css/ionicons.min.css" asp-append-version="true" />
+
+        <link rel="stylesheet" href="~/css/animation.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+
+    </environment>
+
+</head>
+<body id="signin_main" class="authenty signin-main">
+    <div class="section-content">
+        <div class="wrap">
+            <div class="container">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="title animated fadeInDown">
+                                <h1 class="chalkFont white">SCHOOLAZOR</h1>
+                            </div>
+
+                            <form id="ccSelectForm" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                                <div class="form-main text-white">
+                                    <h4>Create a new account.</h4>
+                                    <hr />
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="SchoolName" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="SchoolName" class="form-control" />
+                                            <span asp-validation-for="SchoolName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="FirstName" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="FirstName" class="form-control" />
+                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="LastName" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="LastName" class="form-control" />
+                                            <span asp-validation-for="LastName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ContactNumber" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="ContactNumber" class="form-control" />
+                                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Email" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="Email" class="form-control" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Password" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="Password" class="form-control" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="ConfirmPassword" class="form-control" />
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-block signin" type="submit">Register</button>
+                                    </div>
+                                </div>
+                                <div class="form-footer text-center">
+                                    <span class="text-white">Already have an account?</span> <a href="/Account/Login">Login here</a>
+                                </div>
+
+                                @*<hr />
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default">Register</button>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+
+                                    </div>
+                                </div>*@
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <environment names="Development">
+        <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/admin-lte/dist/js/adminlte.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/lib/admin-lte/dist/js/adminlte.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    }
+</body>
+</html>

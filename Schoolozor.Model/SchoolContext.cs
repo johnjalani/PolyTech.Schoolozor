@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop;
 using Schoolozor.Model.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Schoolozor.Model
 {
@@ -30,6 +27,7 @@ namespace Schoolozor.Model
         {
 
         }
+        public DbSet<SchoolProfile> SchoolProfile { get; set; }
         public DbSet<UserAudit> UserAuditEvents { get; set; }
         public DbSet<SchoolUser> SchoolUser { get; set; }
         public DbSet<StudentAddress> StudentAddress { get; set; }

@@ -27,6 +27,12 @@ namespace Schoolozor.Model.ViewModel
         [Required]
         [Display(Name = "LastName")]
         public string LastName { get; set; }
+        [Required]
+        [Display(Name = "School Name")]
+        public string SchoolName { get; set; }
+        [Required]
+        [Display(Name = "Contact No.")]
+        public string ContactNumber { get; set; }
 
     }
 }
