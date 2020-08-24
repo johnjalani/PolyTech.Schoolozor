@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
-using SchoolozorCore.Common;
 using Schoolozor.Model.ViewModel;
 using Schoolozor.Shared;
 

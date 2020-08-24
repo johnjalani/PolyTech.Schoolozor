@@ -1,0 +1,23 @@
+﻿@{ ViewData["Title"] = "Students"; }
+@{ var model = new DataTableModel();
+    model.Headers = new List<DataTableHeaders>();
+    model.Headers.Add(new DataTableHeaders() { Label = "Student ID", Field = "MasterList.StudentId", Type = fieldType.LINK, Api = "/student/[guid]" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Name", Field = "FullName" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Email", Field = "Email" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Age", Field = "Age" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Gender", Field = "Gender" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Phone", Field = "Phone" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Mobile", Field = "Mobile" });
+    model.DataUrl = "/Student/GetData"; }
+
+@await Component.InvokeAsync("DataTable", model)
+
+<script>
+    $(function () {
+        dataTable.addButton('Create', 'ahowAlert');
+    });
+
+    function ahowAlert() {
+        alert('aa');
+    }
+</script>

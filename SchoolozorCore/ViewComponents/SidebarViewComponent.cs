@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using SchoolozorCore.Common;
-using System.Security.Claims;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using Schoolozor.Model.ViewModel;
+using Schoolozor.Services.Base.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SchoolozorCore.ViewComponents
 {
@@ -20,8 +18,18 @@ namespace SchoolozorCore.ViewComponents
             var sidebars = new List<SidebarMenu>();
 
             sidebars.Add(ModuleHelper.AddModule("Home", "/", "fas fa-home"));
+            sidebars.Add(ModuleHelper.AddModule("Students", "/student", "fas fa-user-graduate"));
+            sidebars.Add(ModuleHelper.AddModule("Calendar", "/calendar", "fas fa-calendar-alt"));
 
-            if (User.IsInRole("SuperAdmins"))
+            sidebars.Add(ModuleHelper.AddTree("Manage", "fas fa-user-cog"));
+            sidebars.Last().TreeChild = new List<SidebarMenu>()
+            {
+                ModuleHelper.AddModule("School Years", "/schoolyear", "fas fa-book"),
+                ModuleHelper.AddModule("Levels", "/level", "fas fa-angle-double-up"),
+                ModuleHelper.AddModule("Sections", "/section", "fas fa-people-arrows"),
+            };
+
+            if (User.IsInRole("Admin"))
             {
                 //sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.SuperAdmin));
                 //sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Role));

@@ -58,6 +58,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Schoolozor.Model\Schoolozor.Model.csproj" />
     <ProjectReference Include="..\Schoolozor.Services.Authentication\Schoolozor.Services.Authentication.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.Base\Schoolozor.Services.Base.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.SchoolYear\Schoolozor.Services.SchoolYear.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.Student\Schoolozor.Services.Student.csproj" />
     <ProjectReference Include="..\Schoolozor.Shared\Schoolozor.Shared.csproj" />
   </ItemGroup>
 

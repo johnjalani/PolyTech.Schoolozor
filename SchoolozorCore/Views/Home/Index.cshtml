@@ -1,16 +1,16 @@
 ﻿
-@{ var model = new DataTableModel();
-                model.Headers = new List<DataTableHeaders>();
-                model.Headers.Add(new DataTableHeaders() { Label = "Sr", Field = "sr" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Order Track Number", Field = "ordertracknumber" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Quantity", Field = "quantity:text-center" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Product Name", Field = "productname" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Special Offer", Field = "specialoffer" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Unit Price", Field = "unitprice" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Unit Price Discount", Field = "unitpricediscount" });
-                model.DataUrl = "/Home/GetData"; }
+@*@{ var model = new DataTableModel();
+    model.Headers = new List<DataTableHeaders>();
+    model.Headers.Add(new DataTableHeaders() { Label = "Sr", Field = "sr" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Order Track Number", Field = "ordertracknumber" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Quantity", Field = "quantity", Type = fieldType.CLASS, CssClass = "text-center" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Product Name", Field = "productname" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Special Offer", Field = "specialoffer" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Unit Price", Field = "unitprice" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Unit Price Discount", Field = "unitpricediscount" });
+    model.DataUrl = "/Home/GetData"; }
 
-@await Component.InvokeAsync("DataTable", model)
+@await Component.InvokeAsync("DataTable", model)*@
 <div class="box">
     <div class="box-body">
         <form asp-controller="Home" asp-action="Index" method="post">

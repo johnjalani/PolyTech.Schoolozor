@@ -3,11 +3,10 @@
     model.Headers = new List<DataTableHeaders>();
     model.Headers.Add(new DataTableHeaders() { Label = "UserAuditId", Field = "UserAuditId" });
     model.Headers.Add(new DataTableHeaders() { Label = "UserId", Field = "UserId" });
-    model.Headers.Add(new DataTableHeaders() { Label = "Timestamp", Field = "Timestamp:datetime" });
-    model.Headers.Add(new DataTableHeaders() { Label = "AuditEvent", Field = "AuditEvent:enum" });
+    model.Headers.Add(new DataTableHeaders() { Label = "Timestamp", Field = "Timestamp", Type = fieldType.DATE });
+    model.Headers.Add(new DataTableHeaders() { Label = "AuditEvent", Field = "AuditEvent", Type = fieldType.ENUM });
     model.Headers.Add(new DataTableHeaders() { Label = "IpAddress", Field = "IpAddress" });
-    model.DataUrl = "/UserLogs/GetData";
-    }
+    model.DataUrl = "/UserLogs/GetData"; }
 
 @await Component.InvokeAsync("DataTable", model)
 

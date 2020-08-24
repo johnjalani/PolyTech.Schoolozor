@@ -1,7 +1,7 @@
 ﻿using Schoolozor.Shared;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Schoolozor.Model
 {
@@ -10,12 +10,15 @@ namespace Schoolozor.Model
         Male,
         Female
     }
-    public class StudentProfile
+    public class StudentProfile : BaseDate
     {
         public Guid Id { get; set; }
+        public string StudentId { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
+        [NotMapped]
         public string FullName
         {
             get
@@ -24,17 +27,26 @@ namespace Schoolozor.Model
             }
         }
         public DateTime DOB { get; set; }
+        [NotMapped]
+        public double Age
+        {
+            get
+            {
+                return DateTime.Now.Subtract(DOB).TotalDays / 365;
+            }
+        }
         public string Email { get; set; }
         public Gender Gender { get; set; }
-        public StudentAddress CurrentAddress { get; set; }
-        public StudentAddress PermanentAddress { get; set; }
+        public virtual StudentAddress CurrentAddress { get; set; }
+        public virtual StudentAddress PermanentAddress { get; set; }
         public string Phone { get; set; }
         public string Mobile { get; set; }
-        public SchoolUser User { get; set; }
-        public List<StudentGuardian> Guardians { get; set; }
-        public List<StudentRecord> Records { get; set; }
-        public DateTime InsertDateTime { get; set; }
-        public DateTime UpdateDateTime { get; set; }
+        public virtual SchoolUser User { get; set; }
+        public virtual SchoolProfile School { get; set; }
+        public virtual IList<StudentRecord> Records { get; set; }
+        //public virtual IList<StudentGuardian> Guardians { get; set; }
+        //public virtual StudentMasterList MasterList { get; set; }
+
 
     }
 }

@@ -16,7 +16,7 @@ namespace Schoolozor.Model
         Guardian
     }
 
-    public class StudentGuardian
+    public class StudentGuardian : BaseDate
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -32,8 +32,6 @@ namespace Schoolozor.Model
         public DateTime DOB { get; set; }
         public string Email { get; set; }
         public GuardianType type { get; set; }
-        public SchoolUser User { get; set; }
-        public DateTime InsertDateTime { get; set; }
-        public DateTime UpdateDateTime { get; set; }
+        public virtual SchoolUser User { get; set; }
     }
 }

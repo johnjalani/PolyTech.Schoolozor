@@ -1,5 +1,4 @@
-﻿using SchoolozorCore.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Schoolozor.Model;
-using System.Text;
-using Newtonsoft.Json.Serialization;
 using Schoolozor.Services.Authentication.Services;
+using Schoolozor.Services.SchoolYear.Services;
+using Schoolozor.Services.Student.Services;
 using Schoolozor.Shared;
+using System.Globalization;
 
 namespace SchoolozorCore
 {
@@ -44,10 +43,18 @@ namespace SchoolozorCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<SchoolContext>(options => options.UseNpgsql(connString));
+            var cultureInfo = new CultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
-            services.AddIdentity<SchoolUser, IdentityRole>(o=> {
+            //services.AddDbContext<SchoolContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<SchoolContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DevConnection"));
+            });
+
+            services.AddIdentity<SchoolUser, IdentityRole>(o =>
+            {
                 o.SignIn.RequireConfirmedEmail = true;
                 o.User.RequireUniqueEmail = true;
                 o.Password.RequiredLength = 8;
@@ -77,8 +84,11 @@ namespace SchoolozorCore
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();            
+            services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<Email>();
+            services.AddTransient<StudentServices>();
+            services.AddTransient<SchoolYearServices>();
+            services.AddTransient(typeof(IDataManager<>), typeof(DataManager<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

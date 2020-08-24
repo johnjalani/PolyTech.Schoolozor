@@ -20,18 +20,26 @@
         var colDefinitions = [];
         for (var i = 0; i < this.options.columns.length; i++) {
             //TODO: When you add a new data formatting here, make sure to add also in GlobalHelpers.cs Ln 54
-            var def = this.options.columns[i].split(':');
-            if (def.length > 1) {
-                if ('enum,datetime'.indexOf(def[1]) > -1) {
-                    def[0] = def[0] + 'Desc';
-                }
-                else {
-                    colDefinitions.push({
-                        "className": def[1], "targets": [i]
-                    });
-                }
-                this.options.columns[i] = def[0];
+            var field = this.options.columns[i].Field;
+            var type = this.options.columns[i].Type;
+            var api = this.options.columns[i].Api;
+            var cssClass = this.options.columns[i].CssClass;
+
+            if ('ENUM, DATE'.indexOf(type) > -1 && type !== '') {
+                field = field + 'Desc';
             }
+            else if ('LINK'.indexOf(type) > -1 && type !== '') {
+                colDefinitions.push({
+                    "defaultContent": "<button class='btn btn-link'>" + field + "</button>", "targets": [i]
+                });
+            }
+            else if ('CLASS'.indexOf(type) > -1 && type !== '') {
+                colDefinitions.push({
+                    "className": cssClass, "targets": [i]
+                });
+            }
+            this.options.columns[i] = field;
+
             cols.push({
                 "data": this.options.columns[i]
             });
@@ -46,6 +54,9 @@
                 "dataType": "JSON",
                 //"success": function (data) {
                 //    var x = data;
+                //},
+                //"error": function (e) {
+                //    alert(e.responseText);
                 //}
             };
         }
@@ -64,11 +75,10 @@
             "dom": "<'row'<'col-sm-6'l><'col-sm-6'<'#buttonContainer.site-datatable-button-container'>f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
         });
     },
-    addButton: function (label, action) {
-        $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success' onclick='" + action + "'>" + label + "</button>");
+    addButton: function (label, href) {
+        $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success' onclick=\"window.location.href='"+ href +"'\" >" + label + "</button>");
     }
 }
-
 //$('#TableId').DataTable(
 //    {
 //        searchDelay: 500,

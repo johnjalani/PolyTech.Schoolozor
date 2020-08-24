@@ -1,12 +1,6 @@
-﻿using Blazor.IndexedDB.WebAssembly;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Identity;
 using Schoolozor.Shared;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Schoolozor.Model
 {
@@ -31,9 +25,9 @@ namespace Schoolozor.Model
             }
         }
         public UserType Type { get; set; }
-        [NotMapped]
-        public string Token { get; set; }
-        public SchoolProfile School { get; set; }
-
+        public DateTime InsertedDateTime { get; set; }
+        public DateTime UpdatedDateTime { get; set; }
+        public DateTime? DeletedDateTime { get; set; }
+        public virtual SchoolProfile School { get; set; }
     }
 }

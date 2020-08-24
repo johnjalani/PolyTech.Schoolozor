@@ -40,13 +40,13 @@ namespace Schoolozor.Services.Authentication.Services
                 string lastName = "Admin";
                 string email = "superadmin@admin.com";
                 string password = "P@ssw0rd1";
-                string role = "SuperAdmins";
+                string role = "Admin";
                 string role2 = "SeniorManagers";
                 string role3 = "Managers";
 
                 if (await _userManager.FindByNameAsync(email) == null)
                 {
-                    // Create SuperAdmins role if it doesn't exist
+                    // Create Admin role if it doesn't exist
                     if (await roleManager.FindByNameAsync(role) == null)
                     {
                         await roleManager.CreateAsync(new IdentityRole(role));

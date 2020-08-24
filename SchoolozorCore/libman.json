@@ -47,6 +47,14 @@
       "destination": "wwwroot/lib/featherIcons/"
     },
     {
+      "library": "fullcalendar@4.2.0",
+      "destination": "wwwroot/lib/fullcalendar/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
       "provider": "jsdelivr",
       "library": "admin-lte@3.0.0-beta.1",
       "destination": "wwwroot/lib/admin-lte/",
