@@ -1,6 +1,7 @@
 USE TREX
 
 SELECT * FROM AspNetUsers
+--SELECT * FROM AspNetUserRoles
 --SELECT * FROM AspNetRoles
 --INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp) VALUES (NEWID(), 'Admin', 'ADMIN', NEWID())
 --INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp) VALUES (NEWID(), 'Staff', 'STAFF', NEWID())
@@ -36,3 +37,4 @@ SELECT * FROM SchoolSection
 --VALUES
 --(NEWID(), 'Josh', 'Bonsol', 'Bayot', 'August 19, 2007', 'joshemmanuelbonsol@gmail.com', 0, NULL, NULL, NULL, NULL, NULL, NULL, GETDATE(), GETDATE(), NULL)
 SELECT * FROM StudentProfile
+--SELECT * FROM UserAuditEvents

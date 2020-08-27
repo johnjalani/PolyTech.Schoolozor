@@ -30,7 +30,7 @@ namespace Schoolozor.Services.SchoolYear.Services
         }
         public List<SchoolYearViewModel> GetSchoolYears(Guid schoolId)
         {
-            return _manager.GetList(o => o.School.Id == schoolId && o.DeletedDateTime == null)
+            return _manager.GetList(o => o.School.Id == schoolId && o.DeletedDateTime == null, o=>o.School)
                            .Select(o => new SchoolYearViewModel()
                            {
                                Id = o.Id,
@@ -44,7 +44,7 @@ namespace Schoolozor.Services.SchoolYear.Services
 
         public SchoolYearViewModel GetSchoolYear(Guid schoolYearId)
         {
-            var o = _manager.GetSingle(o => o.Id == schoolYearId && o.DeletedDateTime == null);
+            var o = _manager.GetSingle(o => o.Id == schoolYearId && o.DeletedDateTime == null, o=>o.School);
 
             return new SchoolYearViewModel()
             {
@@ -66,6 +66,32 @@ namespace Schoolozor.Services.SchoolYear.Services
                 InsertedDateTime = DateTime.Now,
                 UpdatedDateTime = DateTime.Now,
                 School = school
+            });
+            return ResponseResult<SchoolYearViewModel>.SetSuccess(data);
+        }
+
+        public async Task<ResponseResult<SchoolYearViewModel>> UpdateSchoolYear(SchoolYearViewModel data, SchoolProfile school)
+        {
+            await _manager.UpdateAsync(new Model.SchoolYear()
+            {
+                Id = data.Id,
+                Name = data.Name,
+                Start = data.Start.Value,
+                End = data.End.Value,
+                UpdatedDateTime = DateTime.Now
+            });
+            return ResponseResult<SchoolYearViewModel>.SetSuccess(data);
+        }
+
+        public async Task<ResponseResult<SchoolYearViewModel>> DeleteSchoolYear(SchoolYearViewModel data)
+        {
+            await _manager.UpdateAsync(new Model.SchoolYear()
+            {
+                Id = data.Id,
+                Name = data.Name,
+                Start = data.Start.Value,
+                End = data.End.Value,
+                DeletedDateTime = DateTime.Now
             });
             return ResponseResult<SchoolYearViewModel>.SetSuccess(data);
         }

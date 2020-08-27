@@ -58,7 +58,7 @@ namespace Schoolozor.Model
                 dbQuery = dbQuery.Include<T, object>(navigationProperty);
 
             list = dbQuery
-                //.AsNoTracking()
+                .AsNoTracking()
                 .Where(where)
                 .ToList<T>();
 

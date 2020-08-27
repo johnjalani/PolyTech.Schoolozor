@@ -2,8 +2,14 @@
     var inputs = $('input[data-type]');
     for (var i = 0; i < inputs.length; i++) {
         switch ($(inputs[i]).data('type')) {
-            case 'datetime':
+            case 'date':
                 $(inputs[i]).datepicker({});
+                $(inputs[i]).attr('placeholder', 'MM/DD/YYYY');
+                break;
+            case 'toupper':
+                $(inputs[i]).keyup(function () {
+                    $(this).val($(this).val().toUpperCase());
+                });
                 break;
             default:
                 break;

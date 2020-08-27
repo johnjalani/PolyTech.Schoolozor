@@ -9,6 +9,7 @@ namespace Schoolozor.Model.ViewModel.SchoolViewModels
         public Guid Id { get; set; }
         [Required]
         [Display(Name = "Name")]
+        [MinLength(5)]
         public string Name { get; set; }
         [Required]
         [DataType(DataType.Date)]

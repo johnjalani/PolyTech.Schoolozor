@@ -27,22 +27,34 @@
 
             if ('ENUM, DATE'.indexOf(type) > -1 && type !== '') {
                 field = field + 'Desc';
+                cols.push({
+                    "data": field
+                });
             }
-            else if ('LINK'.indexOf(type) > -1 && type !== '') {
-                colDefinitions.push({
-                    "defaultContent": "<button class='btn btn-link'>" + field + "</button>", "targets": [i]
+            else if ('LINK' === type) {
+                cols.push({
+                    "data": field,
+                    "render": function (data, type, row, i) {
+                        var col = dataTable.options.columns[i.row]
+                        var api = dataTable.options.columns[0].Api.replace(dataTable.options.columns[0].Api.substring(dataTable.options.columns[0].Api.indexOf("[") + 1, dataTable.options.columns[0].Api.indexOf("]")), row[dataTable.options.columns[0].Api.substring(dataTable.options.columns[0].Api.indexOf("[") + 1, dataTable.options.columns[0].Api.indexOf("]"))]).replace("[", "").replace("]","");
+                        if (type === 'display') {
+                            return "<a href='"+ api +"' >" + data + "</a>";
+                        } else {
+                            return data
+                        }
+                    }
                 });
             }
             else if ('CLASS'.indexOf(type) > -1 && type !== '') {
                 colDefinitions.push({
                     "className": cssClass, "targets": [i]
                 });
+                cols.push({
+                    "data": field
+                });
             }
-            this.options.columns[i] = field;
 
-            cols.push({
-                "data": this.options.columns[i]
-            });
+            //this.options.columns[i] = field;
         }
         var isServerSide = false;
         var ajax = '';
@@ -76,7 +88,7 @@
         });
     },
     addButton: function (label, href) {
-        $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success' onclick=\"window.location.href='"+ href +"'\" >" + label + "</button>");
+        $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success' onclick=\"window.location.href='" + href + "'\" >" + label + "</button>");
     }
 }
 //$('#TableId').DataTable(
