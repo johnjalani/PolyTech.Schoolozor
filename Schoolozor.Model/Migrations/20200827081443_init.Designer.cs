@@ -10,7 +10,7 @@ using Schoolozor.Model;
 namespace Schoolozor.Model.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20200818060921_init")]
+    [Migration("20200827081443_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -185,6 +185,9 @@ namespace Schoolozor.Model.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
                         .HasColumnType("nvarchar(max)");

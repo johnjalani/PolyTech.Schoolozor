@@ -123,8 +123,9 @@ namespace Schoolozor.Services.Authentication.Controllers
                         ContactNumber = model.ContactNumber,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        Name = model.SchoolName
-                    });
+                        Name = model.SchoolName,
+                        Code = Shared.String.GenerateRandom(3, true, false, false, true)
+                    }); ;
                     var user = new SchoolUser
                     {
                         UserName = model.Email,
@@ -148,7 +149,7 @@ namespace Schoolozor.Services.Authentication.Controllers
                         await _emailSender.SendEmailAsync(model.Email, "Confirm your account", $"Please confirm your account by clicking this: <a href='{callbackUrl}'>link</a>");
 
                         _logger.LogInformation(3, "User created a new account with password.");
-                        trans.Commit();
+                         await trans.CommitAsync();
                         return RedirectToAction(nameof(SuccessRegister));
                     }
                     AddErrors(result);

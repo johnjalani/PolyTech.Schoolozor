@@ -1,23 +1,12 @@
 ﻿@{ ViewData["Title"] = "Students"; }
-@{ var model = new DataTableModel();
-    model.Headers = new List<DataTableHeaders>();
-    model.Headers.Add(new DataTableHeaders() { Label = "Student ID", Field = "MasterList.StudentId", Type = fieldType.LINK, Api = "/student/[guid]" });
-    model.Headers.Add(new DataTableHeaders() { Label = "Name", Field = "FullName" });
-    model.Headers.Add(new DataTableHeaders() { Label = "Email", Field = "Email" });
-    model.Headers.Add(new DataTableHeaders() { Label = "Age", Field = "Age" });
-    model.Headers.Add(new DataTableHeaders() { Label = "Gender", Field = "Gender" });
-    model.Headers.Add(new DataTableHeaders() { Label = "Phone", Field = "Phone" });
-    model.Headers.Add(new DataTableHeaders() { Label = "Mobile", Field = "Mobile" });
-    model.DataUrl = "/Student/GetData"; }
+@{ var dt = new DataTableModel();
+    dt.Headers = new List<DataTableHeaders>();
+    dt.Headers.Add(new DataTableHeaders() { Label = "StudentID", Field = "studentId", Type = fieldType.LINK, Api = "/student/editdata?Id=[id]" });
+    dt.Headers.Add(new DataTableHeaders() { Label = "Name", Field = "fullName" });
+    dt.Headers.Add(new DataTableHeaders() { Label = "Email", Field = "email" });
+    dt.DataUrl = "/student/getdata";
 
-@await Component.InvokeAsync("DataTable", model)
+    dt.Buttons = new List<DataTableButtons>();
+    dt.Buttons.Add(new DataTableButtons() { Label = "Create", Href = "/student/newdata" }); }
 
-<script>
-    $(function () {
-        dataTable.addButton('Create', 'ahowAlert');
-    });
-
-    function ahowAlert() {
-        alert('aa');
-    }
-</script>
+@await Component.InvokeAsync("DataTable", dt)

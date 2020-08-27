@@ -46,10 +46,13 @@
         dataTable.options.url = '@Model.DataUrl';
         dataTable.generate();
 
-        @foreach (var b in Model.Buttons)
+        @if (Model.Buttons != null)
         {
-            @:dataTable.addButton("@b.Label", "@b.Href");
+            foreach (var b in Model.Buttons)
+            {
+                @:dataTable.addButton("@b.Label", "@b.Href");
+            }
         }
-        
+
     });
 </script>

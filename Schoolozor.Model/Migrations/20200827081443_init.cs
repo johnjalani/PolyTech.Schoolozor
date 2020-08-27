@@ -32,7 +32,8 @@ namespace Schoolozor.Model.Migrations
                     Name = table.Column<string>(nullable: true),
                     ContactNumber = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

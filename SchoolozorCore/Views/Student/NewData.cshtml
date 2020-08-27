@@ -1,0 +1,86 @@
+﻿@model StudentViewModel
+@{ ViewData["Title"] = "Students"; }
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Add new Student</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="post">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="FirstName"></label>
+                                <input type="text" class="form-control" asp-for="FirstName" data-type="toupper" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MiddleName"></label>
+                                <input type="text" class="form-control" asp-for="MiddleName" data-type="toupper" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="LastName"></label>
+                                <input type="text" class="form-control" asp-for="LastName" data-type="toupper" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="DOB"></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" asp-for="DOB" data-type="date">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Gender"></label>
+                                <select class="form-control" asp-for="Gender">
+                                    <option value="">Select</option>
+                                    <option value="0">Male</option>
+                                    <option value="1">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input type="text" class="form-control" asp-for="Email" data-type="email" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Phone"></label>
+                                <input type="text" class="form-control" asp-for="Phone" data-type="phone" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Mobile"></label>
+                                <input type="text" class="form-control" asp-for="Mobile" data-type="mobile" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary" formaction="NewData" onclick="return confirm('Are you sure?');">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Schoolozor.Model;
@@ -26,7 +27,6 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             AddPageHeader("School Years");
             return View();
         }
-        [Route("schoolyear/new")]
         public IActionResult NewData()
         {
             AddPageHeader("School Years");
@@ -35,36 +35,20 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             return View(new SchoolYearViewModel());
         }
         [HttpPost]
-        [Route("schoolyear/new")]
         public async Task<IActionResult> NewData(SchoolYearViewModel data)
         {
 
             if (Validate())
             {
                 var user = await CurrentUser();
-
-                //check for overlapping dates from existing school years
-                var sys = _sy.GetSchoolYears(user.School.Id);
-                foreach (var sy in sys)
-                {
-                    if (sy.Start.Value <= data.Start.Value && data.Start.Value <= sy.End.Value)
-                    {
-                        AddPageAlerts(PageAlertType.Warning, "Your date range is overlapping to " + sy.Name + "!");
-                        return View();
-                    }
-                    else if (sy.Start.Value <= data.End.Value && data.End.Value <= sy.End.Value)
-                    {
-                        AddPageAlerts(PageAlertType.Warning, "Your date range is overlapping to " + sy.Name + "!");
-                        return View();
-                    }
-
+                if (!Validate(data, user)) {
+                    return View();
                 }
-
 
                 var result = await _sy.AddSchoolYear(data, user.School);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("success", new { message = "Creating new school year " + data.Name + " succeeded!" });
+                    return RedirectToAction("Success", new { message = "Creating new school year " + data.Name + " succeeded!" });
                 }
                 else
                 {
@@ -75,7 +59,6 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             return View();
         }
 
-        [Route("schoolyear/{Id}")]
         public IActionResult EditData(Guid Id)
         {
             var data = _sy.GetSchoolYear(Id);
@@ -100,33 +83,15 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             if (Validate())
             {
                 var user = await CurrentUser();
-
-                //check for overlapping dates from existing school years
-                var sys = _sy.GetSchoolYears(user.School.Id);
-                foreach (var sy in sys.Where(o => o.Id != data.Id))
+                if (!Validate(data, user))
                 {
-                    if (sy.Start.Value <= data.Start.Value && data.Start.Value <= sy.End.Value)
-                    {
-                        AddPageAlerts(PageAlertType.Warning, "Your date range is overlapping to " + sy.Name + "!");
-                        return View();
-                    }
-                    else if (sy.Start.Value <= data.End.Value && data.End.Value <= sy.End.Value)
-                    {
-                        AddPageAlerts(PageAlertType.Warning, "Your date range is overlapping to " + sy.Name + "!");
-                        return View();
-                    }
-                    if (sy.Name.ToLower().Trim() == data.Name.ToLower().Trim())
-                    {
-                        AddPageAlerts(PageAlertType.Warning, "The name you use has already exist!");
-                        return View();
-                    }
-
+                    return View();
                 }
 
                 var result = await _sy.UpdateSchoolYear(data, user.School);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("success", new { message = "Updating school year " + data.Name + " succeeded!" });
+                    return RedirectToAction("Success", new { message = "Updating school year " + data.Name + " succeeded!" });
                 }
                 else
                 {
@@ -146,7 +111,7 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             var result = await _sy.DeleteSchoolYear(data);
             if (result.Succeeded)
             {
-                return RedirectToAction("success", new { message = "Deleting school year " + data.Name + " succeeded!" });
+                return RedirectToAction("Success", "SchoolYear", new { message = "Deleting school year " + data.Name + " succeeded!" });
             }
             else
             {
@@ -158,7 +123,6 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             }
         }
 
-        [Route("schoolyear/success")]
         public IActionResult Success(string message)
         {
             AddPageAlerts(PageAlertType.Success, message);
@@ -180,6 +144,35 @@ namespace Schoolozor.Services.SchoolYear.Controllers
                 Console.Write(ex);
                 return null;
             }
+        }
+
+        private bool Validate(SchoolYearViewModel data, SchoolUser user) {
+            var IsValid = true;
+
+            //check for overlapping dates from existing school years
+            var sys = _sy.GetSchoolYears(user.School.Id);
+            foreach (var sy in sys.Where(o=>o.Id != data.Id))
+            {
+                if (sy.Start.Value <= data.Start.Value && data.Start.Value <= sy.End.Value)
+                {
+                    AddPageAlerts(PageAlertType.Warning, "Your date range is overlapping to " + sy.Name + "!");
+                    IsValid = false;
+                    break;
+                }
+                else if (sy.Start.Value <= data.End.Value && data.End.Value <= sy.End.Value)
+                {
+                    AddPageAlerts(PageAlertType.Warning, "Your date range is overlapping to " + sy.Name + "!");
+                    IsValid = false;
+                    break;
+                }
+                if (sy.Name.ToLower().Trim() == data.Name.ToLower().Trim())
+                {
+                    AddPageAlerts(PageAlertType.Warning, "The name you use has already exist!");
+                    IsValid = false;
+                    break;
+                }
+            }
+            return IsValid;
         }
     }
 }

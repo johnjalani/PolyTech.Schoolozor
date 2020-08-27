@@ -12,6 +12,7 @@ namespace Schoolozor.Model
         public string ContactNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Code { get; set; }
         public virtual IList<SchoolUser> Users { get; set; }
         public virtual IList<SchoolYear> SchoolYears { get; set; }
     }

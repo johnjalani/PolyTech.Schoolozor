@@ -8,7 +8,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" asp-action="POST">
+            <form role="form" method="post">
                 <div class="card-body">
                     <div class="form-group">
                         <label asp-for="Name"></label>
@@ -36,7 +36,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary" formaction="NewData" onclick="return confirm('Are you sure?');">Submit</button>
+                    <button type="submit" class="btn btn-primary" formaction="newdata" value="new" onclick="return confirm('Are you sure?');">Submit</button>
                 </div>
             </form>
         </div>

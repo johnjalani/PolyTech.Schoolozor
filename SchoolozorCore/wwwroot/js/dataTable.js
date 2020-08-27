@@ -36,9 +36,9 @@
                     "data": field,
                     "render": function (data, type, row, i) {
                         var col = dataTable.options.columns[i.row]
-                        var api = dataTable.options.columns[0].Api.replace(dataTable.options.columns[0].Api.substring(dataTable.options.columns[0].Api.indexOf("[") + 1, dataTable.options.columns[0].Api.indexOf("]")), row[dataTable.options.columns[0].Api.substring(dataTable.options.columns[0].Api.indexOf("[") + 1, dataTable.options.columns[0].Api.indexOf("]"))]).replace("[", "").replace("]","");
+                        var api = dataTable.options.columns[0].Api.replace(dataTable.options.columns[0].Api.substring(dataTable.options.columns[0].Api.indexOf("[") + 1, dataTable.options.columns[0].Api.indexOf("]")), row[dataTable.options.columns[0].Api.substring(dataTable.options.columns[0].Api.indexOf("[") + 1, dataTable.options.columns[0].Api.indexOf("]"))]).replace("[", "").replace("]", "");
                         if (type === 'display') {
-                            return "<a href='"+ api +"' >" + data + "</a>";
+                            return "<a href='" + api + "' >" + data + "</a>";
                         } else {
                             return data
                         }
@@ -52,9 +52,11 @@
                 cols.push({
                     "data": field
                 });
+            } else {
+                cols.push({
+                    "data": field
+                });
             }
-
-            //this.options.columns[i] = field;
         }
         var isServerSide = false;
         var ajax = '';

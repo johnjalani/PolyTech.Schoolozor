@@ -11,6 +11,28 @@
                     $(this).val($(this).val().toUpperCase());
                 });
                 break;
+            case 'email':
+                $(inputs[i]).inputmask({
+                    mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]",
+                    greedy: false,
+                    onBeforePaste: function (pastedValue, opts) {
+                        pastedValue = pastedValue.toLowerCase();
+                        return pastedValue.replace("mailto:", "");
+                    },
+                    definitions: {
+                        '*': {
+                            validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~\-]",
+                            casing: "lower"
+                        }
+                    }
+                });
+                break;
+            case 'phone':
+                $(inputs[i]).inputmask('9999999999');
+                break;
+            case 'mobile':
+                $(inputs[i]).inputmask('+999999999999');
+                break;
             default:
                 break;
         }

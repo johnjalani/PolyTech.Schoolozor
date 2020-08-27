@@ -18,23 +18,7 @@ namespace Schoolozor.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
-        [NotMapped]
-        public string FullName
-        {
-            get
-            {
-                return $"{FirstName.ToProperCase()} {(!string.IsNullOrEmpty(MiddleName) ? MiddleName.ToProperCase().Substring(0, 1) : string.Empty)} {LastName.ToProperCase()}";
-            }
-        }
         public DateTime DOB { get; set; }
-        [NotMapped]
-        public double Age
-        {
-            get
-            {
-                return DateTime.Now.Subtract(DOB).TotalDays / 365;
-            }
-        }
         public string Email { get; set; }
         public Gender Gender { get; set; }
         public virtual StudentAddress CurrentAddress { get; set; }
