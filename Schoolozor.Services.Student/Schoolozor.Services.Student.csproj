@@ -7,6 +7,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Schoolozor.Model\Schoolozor.Model.csproj" />
     <ProjectReference Include="..\Schoolozor.Services.Base\Schoolozor.Services.Base.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.Records\Schoolozor.Services.Records.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.SchoolYear\Schoolozor.Services.SchoolYear.csproj" />
     <ProjectReference Include="..\Schoolozor.Shared\Schoolozor.Shared.csproj" />
   </ItemGroup>
 

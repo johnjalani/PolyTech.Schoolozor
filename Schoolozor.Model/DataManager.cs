@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Schoolozor.Model
 {
-    public interface IDataManager<T> where T : BaseDate, new()
+    public interface IDataManager<T> where T : BaseContextFields, new()
     {
         IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties);
         IList<T> GetList(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties);
@@ -20,7 +20,7 @@ namespace Schoolozor.Model
         Task Transaction(params Func<Task>[] func);
     }
 
-    public class DataManager<T> : IDataManager<T> where T : BaseDate, new()
+    public class DataManager<T> : IDataManager<T> where T : BaseContextFields, new()
     {
         private readonly SchoolContext _ctx;
         public DataManager(SchoolContext ctx)
@@ -98,8 +98,11 @@ namespace Schoolozor.Model
 
         public async Task<T> UpdateAsync(T item)
         {
+            var old = GetSingle(o => o.Id == item.Id);
 
             item.UpdatedDateTime = DateTime.Now;
+            item.InsertedDateTime = old.InsertedDateTime;
+            item.DeletedDateTime = old.DeletedDateTime;
             _ctx.Entry(item).State = EntityState.Modified;
 
             await _ctx.SaveChangesAsync();
@@ -108,7 +111,10 @@ namespace Schoolozor.Model
 
         public async Task<T> RemoveAsync(T item)
         {
+            var old = GetSingle(o => o.Id == item.Id);
 
+            item.UpdatedDateTime = old.InsertedDateTime;
+            item.InsertedDateTime = old.InsertedDateTime;
             item.DeletedDateTime = DateTime.Now;
             _ctx.Entry(item).State = EntityState.Modified;
 

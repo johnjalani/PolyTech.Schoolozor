@@ -45,6 +45,19 @@
                     }
                 });
             }
+            else if ('DICT' === type) {
+                cols.push({
+                    "data": field,
+                    "render": function (data, type, row, i) {
+                        var col = dataTable.options.columns[i.row]
+                        if (type === 'display') {
+                            return "<span></span>";
+                        } else {
+                            return data
+                        }
+                    }
+                });
+            }
             else if ('CLASS'.indexOf(type) > -1 && type !== '') {
                 colDefinitions.push({
                     "className": cssClass, "targets": [i]
@@ -91,6 +104,14 @@
     },
     addButton: function (label, href) {
         $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success' onclick=\"window.location.href='" + href + "'\" >" + label + "</button>");
+    },
+    addList: function (label, item, selected) {
+        var options = "";
+        for (var i = 0; i < item.length; i++) {
+            options += "<option value='" + item[i].Value + "'>" + item[i].Name + "</option>";
+
+        }
+        $("#buttonContainer").parent().siblings().addClass("row").append("<select class='form-control col-md-3 ml-2'><option>" + label + "</option>" + options + "</select>");
     }
 }
 //$('#TableId').DataTable(

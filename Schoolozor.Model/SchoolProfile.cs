@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Schoolozor.Model
 {
-    public class SchoolProfile : BaseDate
+    public class SchoolProfile : BaseContextFields
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string ContactNumber { get; set; }
         public string FirstName { get; set; }

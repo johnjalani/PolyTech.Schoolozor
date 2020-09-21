@@ -2,6 +2,7 @@
 using Schoolozor.Shared;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 
 namespace Schoolozor.Model.ViewModel
@@ -11,13 +12,15 @@ namespace Schoolozor.Model.ViewModel
         DATE,
         LINK,
         ENUM,
-        CLASS
+        CLASS,
+        LIST,
+        DICT
     }
     public class DataTableModel
     {
         public string DataUrl { get; set; }
         public List<DataTableHeaders> Headers { get; set; }
-        public List<DataTableButtons> Buttons { get; set; }
+        public List<DataTableControls> Controls { get; set; }
     }
     public class DataTableHeaders
     {
@@ -37,9 +40,26 @@ namespace Schoolozor.Model.ViewModel
         public string CssClass { get; set; }
     }
 
-    public class DataTableButtons
+    public class DataTableControls
     {
         public string Label { get; set; }
+        public string Type { get; set; }
+
+    }
+    public class DataTableButton : DataTableControls
+    {
+        public DataTableButton()
+        {
+            this.Type = "Button";
+        }
         public string Href { get; set; }
+    }
+    public class DataTableList : DataTableControls
+    {
+        public DataTableList()
+        {
+            this.Type = "List";
+        }
+        public List<NameValuePair> Items { get; set; }
     }
 }

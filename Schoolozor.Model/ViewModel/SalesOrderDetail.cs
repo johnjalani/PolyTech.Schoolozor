@@ -11,18 +11,18 @@ namespace Schoolozor.Model.ViewModel
     public class SalesOrderDetail
     {
         [DisplayName("SR")]
-        public int sr { get; set; }
+        public int Sr { get; set; }
         [DisplayName("Order Track Number")]
-        public string ordertracknumber { get; set; }
+        public string OrderTrackNumber { get; set; }
         [DisplayName("Quantity")]
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
         [DisplayName("Product Name")]
-        public string productname { get; set; }
+        public string ProductName { get; set; }
         [DisplayName("Special Offer")]
-        public string specialoffer { get; set; }
+        public string SpecialOffer { get; set; }
         [DisplayName("Unit Price")]
-        public double unitprice { get; set; }
+        public double UnitPrice { get; set; }
         [DisplayName("Unit Price Discount")]
-        public double unitpricediscount { get; set; }
+        public double UnitPriceDiscount { get; set; }
     }
 }

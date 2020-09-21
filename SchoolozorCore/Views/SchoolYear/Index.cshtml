@@ -6,7 +6,7 @@
     dt.Headers.Add(new DataTableHeaders() { Label = "End", Field = "End", Type = fieldType.DATE });
 
     dt.DataUrl = "/SchoolYear/GetData";
-    dt.Buttons = new List<DataTableButtons>();
-    dt.Buttons.Add(new DataTableButtons() { Label = "Create", Href = "/schoolyear/newdata" }); }
+    dt.Controls = new List<DataTableControls>();
+    dt.Controls.Add(new DataTableButton() { Label = "Create", Href = "/schoolyear/newdata" }); }
 
 @await Component.InvokeAsync("DataTable", dt)

@@ -117,13 +117,13 @@ namespace Schoolozor.Services.Base.Controllers
                     string[] info = line.Split(',');
 
                     // Setting.
-                    infoObj.sr = Convert.ToInt32(info[0].ToString());
-                    infoObj.ordertracknumber = info[1].ToString();
-                    infoObj.quantity = Convert.ToInt32(info[2].ToString());
-                    infoObj.productname = info[3].ToString();
-                    infoObj.specialoffer = info[4].ToString();
-                    infoObj.unitprice = Convert.ToDouble(info[5].ToString());
-                    infoObj.unitpricediscount = Convert.ToDouble(info[6].ToString());
+                    infoObj.Sr = Convert.ToInt32(info[0].ToString());
+                    infoObj.OrderTrackNumber = info[1].ToString();
+                    infoObj.Quantity = Convert.ToInt32(info[2].ToString());
+                    infoObj.ProductName = info[3].ToString();
+                    infoObj.SpecialOffer = info[4].ToString();
+                    infoObj.UnitPrice = Convert.ToDouble(info[5].ToString());
+                    infoObj.UnitPriceDiscount = Convert.ToDouble(info[6].ToString());
 
                     // Adding.
                     lst.Add(infoObj);
@@ -165,51 +165,51 @@ namespace Schoolozor.Services.Base.Controllers
                 {
                     case "0":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.sr).ToList()
-                                                                                                 : data.OrderBy(p => p.sr).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Sr).ToList()
+                                                                                                 : data.OrderBy(p => p.Sr).ToList();
                         break;
 
                     case "1":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ordertracknumber).ToList()
-                                                                                                 : data.OrderBy(p => p.ordertracknumber).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.OrderTrackNumber).ToList()
+                                                                                                 : data.OrderBy(p => p.OrderTrackNumber).ToList();
                         break;
 
                     case "2":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.quantity).ToList()
-                                                                                                 : data.OrderBy(p => p.quantity).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Quantity).ToList()
+                                                                                                 : data.OrderBy(p => p.Quantity).ToList();
                         break;
 
                     case "3":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.productname).ToList()
-                                                                                                 : data.OrderBy(p => p.productname).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.ProductName).ToList()
+                                                                                                 : data.OrderBy(p => p.ProductName).ToList();
                         break;
 
                     case "4":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.specialoffer).ToList()
-                                                                                                   : data.OrderBy(p => p.specialoffer).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.SpecialOffer).ToList()
+                                                                                                   : data.OrderBy(p => p.SpecialOffer).ToList();
                         break;
 
                     case "5":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.unitprice).ToList()
-                                                                                                 : data.OrderBy(p => p.unitprice).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.UnitPrice).ToList()
+                                                                                                 : data.OrderBy(p => p.UnitPrice).ToList();
                         break;
 
                     case "6":
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.unitpricediscount).ToList()
-                                                                                                 : data.OrderBy(p => p.unitpricediscount).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.UnitPriceDiscount).ToList()
+                                                                                                 : data.OrderBy(p => p.UnitPriceDiscount).ToList();
                         break;
 
                     default:
 
                         // Setting.
-                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.sr).ToList()
-                                                                                                 : data.OrderBy(p => p.sr).ToList();
+                        lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(p => p.Sr).ToList()
+                                                                                                 : data.OrderBy(p => p.Sr).ToList();
                         break;
                 }
             }

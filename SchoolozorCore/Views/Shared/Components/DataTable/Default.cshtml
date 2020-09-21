@@ -3,12 +3,13 @@
 
 <div class="box">
     <div class="box-body table-responsive">
-        <table class="table table-striped jambo_table table-hover" id="@tableId" cellspacing="0" align="center">
+        <table class="table table-striped jambo_table table-hover table-condensed" id="@tableId" cellspacing="0" align="center">
             <thead>
                 <tr class="headings">
                     @foreach (var h in Model.Headers)
                     {
-        <th>@h.Label</th>}
+        <th>@h.Label</th>
+}
 
                 </tr>
             </thead>
@@ -46,11 +47,21 @@
         dataTable.options.url = '@Model.DataUrl';
         dataTable.generate();
 
-        @if (Model.Buttons != null)
+
+        @if (Model.Controls != null)
         {
-            foreach (var b in Model.Buttons)
+            foreach (var b in Model.Controls)
             {
-                @:dataTable.addButton("@b.Label", "@b.Href");
+                switch (b.Type)
+                {
+                    case "Button":
+                        @:dataTable.addButton("@(((DataTableButton)b).Label)", "@(((DataTableButton)b).Href)");
+                        break;
+                    case "List":
+                        @:dataTable.addList("@(((DataTableList)b).Label)", @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(((DataTableList)b).Items))));
+                    break;
+                }
+
             }
         }
 

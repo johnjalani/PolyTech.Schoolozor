@@ -51,6 +51,7 @@ namespace Schoolozor.Model.ViewModel.SchoolViewModels
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         [DataType(DataType.PhoneNumber)]
-        public string Mobile { get; set; }     
+        public string Mobile { get; set; }
+        public List<StudentGuardian> Guardians { get; set; }
     }
 }

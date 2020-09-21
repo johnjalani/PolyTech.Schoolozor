@@ -32,13 +32,17 @@ namespace Schoolozor.Services.Base.Common
                 var tempData = new List<T>();
                 foreach (var item in typeof(T).GetProperties())
                 {
-                    tempData.AddRange(data.Where(m => { return m.GetType().GetProperty(item.Name).GetValue(m, null).ToString().ToLower().Contains(search.ToLower()); }));
+                    if (item.PropertyType.Name != typeof(List<>).Name)
+                    {
+                        tempData.AddRange(data.Where(m => { return m.GetType().GetProperty(item.Name).GetValue(m, null).ToString().ToLower().Contains(search.ToLower()); })); 
+                    }
                 }
                 data = tempData.Distinct().ToList();
             }
 
             // Sorting.
-            data = SortByColumnWithOrder(order, orderDir, data);
+            var orderField = controller.Request.Form["columns["+ order +"][data]"][0];
+            data = SortByColumnWithOrder(orderField, orderDir, data);
 
             // Filter record count.
             int recFilter = data.Count;
@@ -84,8 +88,9 @@ namespace Schoolozor.Services.Base.Common
         {
             // Sorting.
             var lst = new List<T>();
-            lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(o => typeof(T).GetProperties()[int.Parse(order)].GetValue(o, null)).ToList()
-                                                                                     : data.OrderBy(o => typeof(T).GetProperties()[int.Parse(order)].GetValue(o, null)).ToList();
+            var TValue = typeof(T).GetProperty(order, System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            lst = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? data.OrderByDescending(o => TValue.GetValue(o, null)).ToList()
+                                                                                     : data.OrderBy(o => TValue.GetValue(o, null)).ToList();
 
 
             return lst;

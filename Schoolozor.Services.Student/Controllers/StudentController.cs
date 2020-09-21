@@ -7,6 +7,7 @@ using Schoolozor.Services.Base.Common;
 using Schoolozor.Services.Base.Controllers;
 using Schoolozor.Services.Student.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,11 +62,61 @@ namespace Schoolozor.Services.Student.Controllers
             return View();
         }
 
+        public IActionResult EditData(Guid Id)
+        {
+            var data = _student.GetStudent(Id);
+            if (data.PermanentAddress == null)
+            {
+                data.PermanentAddress = new StudentAddress();
+            }
+            if (data.CurrentAddress == null)
+            {
+                data.CurrentAddress = new StudentAddress();
+            }
+            if (data.Guardians == null)
+            {
+                data.Guardians = new List<StudentGuardian>();
+                data.Guardians.Add(new StudentGuardian());
+            }
+
+            AddPageHeader("Students");
+            AddBreadcrumb("Students", "/student");
+            AddBreadcrumb(data.StudentId, "");
+
+
+            return View(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditData(StudentViewModel data)
+        {
+            if (Validate())
+            {
+                var user = await CurrentUser();
+                if (!Validate(data, user))
+                {
+                    return View();
+                }
+
+                var result = await _student.UpdateStudent(data, user.School);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("success", new { message = "Updating student " + data.FullName + " succeeded!" });
+                }
+                else
+                {
+                    AddPageAlerts(PageAlertType.Warning, result.Error.Description);
+                }
+            }
+
+            return View();
+        }
         public IActionResult Success(string message)
         {
             AddPageAlerts(PageAlertType.Success, message);
             AddPageHeader("Students");
             AddBreadcrumb("Students", "/student");
+            AddBreadcrumb("Success", "/student");
             return View();
         }
 
@@ -74,7 +125,7 @@ namespace Schoolozor.Services.Student.Controllers
             try
             {
                 var user = await CurrentUser();
-                return this.BuildDataTableForm<StudentViewModel>(_student.GetStudents(user.School.Id));
+                return this.BuildDataTableForm<StudentViewModel>(_student.GetStudents(user));
             }
             catch (Exception ex)
             {
@@ -89,7 +140,7 @@ namespace Schoolozor.Services.Student.Controllers
             var IsValid = true;
 
             var st = _student.GetStudents(user.School.Id);
-            foreach (var s in st.Where(o=>o.Id != data.Id))
+            foreach (var s in st.Where(o => o.Id != data.Id))
             {
                 if (data.FullName.Trim() == s.FullName.Trim() && data.DOB == s.DOB)
                 {

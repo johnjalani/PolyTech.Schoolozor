@@ -4,11 +4,11 @@
     <div class="col-md-12">
         <div class="card card-secondary">
             <div class="card-header">
-                <h3 class="card-title">Update new School Year</h3>
+                <h3 class="card-title">Update School Year</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" method="post">
+            <form role="form" method="post" name="form">
                 <div class="card-body">
                     <div class="hidden">
                         <input type="hidden" asp-for="Id" />
@@ -39,8 +39,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary" formaction="editdata" value="edit"  onclick="return confirm('Are you sure?');">Update</button>
-                    <button type="submit" class="btn btn-danger" formaction="deletedata" value="delete" onclick="return confirm('Are you sure?');">Delete</button>
+                    <button type="submit" class="btn btn-primary" formaction="editdata" value="edit" data-type="confirm">Update</button>
+                    <button type="submit" class="btn btn-danger" formaction="deletedata" value="delete" data-type="confirm">Delete</button>
                 </div>
             </form>
         </div>

@@ -51,7 +51,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\pages\" />
-    <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 
@@ -59,8 +58,11 @@
     <ProjectReference Include="..\Schoolozor.Model\Schoolozor.Model.csproj" />
     <ProjectReference Include="..\Schoolozor.Services.Authentication\Schoolozor.Services.Authentication.csproj" />
     <ProjectReference Include="..\Schoolozor.Services.Base\Schoolozor.Services.Base.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.Level\Schoolozor.Services.Level.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.Records\Schoolozor.Services.Records.csproj" />
     <ProjectReference Include="..\Schoolozor.Services.SchoolYear\Schoolozor.Services.SchoolYear.csproj" />
     <ProjectReference Include="..\Schoolozor.Services.Student\Schoolozor.Services.Student.csproj" />
+    <ProjectReference Include="..\Schoolozor.Services.Teacher\Schoolozor.Services.Teacher.csproj" />
     <ProjectReference Include="..\Schoolozor.Shared\Schoolozor.Shared.csproj" />
   </ItemGroup>
 

@@ -1,16 +1,4 @@
-﻿@*@{ var model = new DataTableModel();
-        model.Headers = new List<DataTableHeaders>();
-        model.Headers.Add(new DataTableHeaders() { Label = "Sr", Field = "sr" });
-        model.Headers.Add(new DataTableHeaders() { Label = "Order Track Number", Field = "ordertracknumber" });
-        model.Headers.Add(new DataTableHeaders() { Label = "Quantity", Field = "quantity", Type = fieldType.CLASS, CssClass = "text-center" });
-        model.Headers.Add(new DataTableHeaders() { Label = "Product Name", Field = "productname" });
-        model.Headers.Add(new DataTableHeaders() { Label = "Special Offer", Field = "specialoffer" });
-        model.Headers.Add(new DataTableHeaders() { Label = "Unit Price", Field = "unitprice" });
-        model.Headers.Add(new DataTableHeaders() { Label = "Unit Price Discount", Field = "unitpricediscount" });
-        model.DataUrl = "/Home/GetData"; }
-
-    @await Component.InvokeAsync("DataTable", model)*@
-    <div class="box">
+﻿    <div class="box">
         <div class="box-body table-responsive">
             <table class="table table-striped jambo_table table-hover" id="TableId" cellspacing="0" align="center">
                 <thead>
@@ -97,12 +85,12 @@
                 },
                 "columns": [
                     { "data": "sr" },
-                    { "data": "ordertracknumber" },
+                    { "data": "orderTrackNumber" },
                     { "data": "quantity" },
-                    { "data": "productname" },
-                    { "data": "specialoffer" },
-                    { "data": "unitprice" },
-                    { "data": "unitpricediscount" },
+                    { "data": "productName" },
+                    { "data": "specialOffer" },
+                    { "data": "unitPrice" },
+                    { "data": "unitPriceDiscount" },
                 ],
                 "dom": "<'row'<'col-sm-6'l><'col-sm-6'<'#buttonContainer.site-datatable-button-container'>f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
             });

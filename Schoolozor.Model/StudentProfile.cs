@@ -10,11 +10,9 @@ namespace Schoolozor.Model
         Male,
         Female
     }
-    public class StudentProfile : BaseDate
+    public class StudentProfile : BaseContextFields
     {
-        public Guid Id { get; set; }
         public string StudentId { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -28,7 +26,7 @@ namespace Schoolozor.Model
         public virtual SchoolUser User { get; set; }
         public virtual SchoolProfile School { get; set; }
         public virtual IList<StudentRecord> Records { get; set; }
-        //public virtual IList<StudentGuardian> Guardians { get; set; }
+        public virtual IList<StudentGuardian> Guardians { get; set; }
         //public virtual StudentMasterList MasterList { get; set; }
 
 

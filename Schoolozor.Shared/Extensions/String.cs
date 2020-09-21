@@ -7,15 +7,21 @@ namespace Schoolozor.Shared
     {
         public static string ToProperCase(this string value)
         {
-            var values = value.Split(' ');
-            for (int i = 0; i < values.Length; i++)
+            if (value != null)
             {
-                values[i] = values[i].ToLower();
-                values[i] = values[i].Substring(0, 1).ToUpper() + values[i].Substring(1, values[i].Length - 1);
-            }
+                var values = value.Split(' ');
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = values[i].ToLower();
+                    values[i] = values[i].Substring(0, 1).ToUpper() + values[i].Substring(1, values[i].Length - 1);
+                }
 
-            value = values.Aggregate((first, next) => first + " " + next);
-            return value;
+                value = values.Aggregate((first, next) => first + " " + next);
+                return value;
+            }
+            else {
+                return null;
+            }
         }
         /// <summary>
         /// For Models only, it only makes the first character to lowercase
@@ -25,8 +31,14 @@ namespace Schoolozor.Shared
         /// <returns></returns>
         public static string ToCamelCase(this string value)
         {
-            value = value.Substring(0, 1).ToLower() + value.Substring(1, value.Length - 1);
-            return value;
+            if (value != null)
+            {
+                value = value.Substring(0, 1).ToLower() + value.Substring(1, value.Length - 1);
+                return value;
+            }
+            else {
+                return null;
+            }
         }
 
         public static string GenerateRandom(int length, bool hasLetters, bool hasNumbers, bool hasLower, bool hasUpper)

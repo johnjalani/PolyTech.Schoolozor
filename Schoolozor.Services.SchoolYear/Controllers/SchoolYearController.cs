@@ -66,14 +66,7 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             AddPageHeader("School Years");
             AddBreadcrumb("School Years", "/schoolyear");
             AddBreadcrumb(data.Name, "");
-            return View(new SchoolYearViewModel()
-            {
-                Id = data.Id,
-                Name = data.Name,
-                Start = data.Start,
-                End = data.End,
-                SchoolId = data.SchoolId
-            });
+            return View(data);
         }
 
         [HttpPost]
@@ -128,6 +121,7 @@ namespace Schoolozor.Services.SchoolYear.Controllers
             AddPageAlerts(PageAlertType.Success, message);
             AddPageHeader("School Years");
             AddBreadcrumb("School Years", "/schoolyear");
+            AddBreadcrumb("Success", "/schoolyear");
             return View();
         }
 

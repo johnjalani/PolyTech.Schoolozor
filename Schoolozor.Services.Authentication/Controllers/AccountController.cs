@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Schoolozor.Model;
 using Schoolozor.Model.ViewModel;
 using Schoolozor.Services.Base.Controllers;
@@ -25,6 +26,7 @@ namespace Schoolozor.Services.Authentication.Controllers
         private readonly ILogger _logger;
         private readonly SchoolContext _context;
         private readonly IDataManager<SchoolProfile> _schoolManager;
+        private readonly GeneralSettings _settings;
 
         public AccountController(
             UserManager<SchoolUser> userManager,
@@ -34,7 +36,8 @@ namespace Schoolozor.Services.Authentication.Controllers
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
             SchoolContext context,
-            IDataManager<SchoolProfile> schoolManager)
+            IDataManager<SchoolProfile> schoolManager,
+            IOptions<GeneralSettings> settings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -44,6 +47,7 @@ namespace Schoolozor.Services.Authentication.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
             _context = context;
             _schoolManager = schoolManager;
+            _settings = settings.Value;
         }
 
         //
@@ -117,6 +121,11 @@ namespace Schoolozor.Services.Authentication.Controllers
             {
                 using (var trans = _context.Database.BeginTransaction())
                 {
+                    var schoolCode = Shared.String.GenerateRandom(_settings.SchoolCodeLength, true, false, false, true);
+                    while (_schoolManager.GetAll().Where(o=>o.Code == schoolCode).Count() > 0)
+                    {
+                        schoolCode = Shared.String.GenerateRandom(_settings.SchoolCodeLength, true, false, false, true);
+                    }
                     var school = await _schoolManager.AddAsync(new SchoolProfile
                     {
                         Id = Guid.NewGuid(),
@@ -124,7 +133,7 @@ namespace Schoolozor.Services.Authentication.Controllers
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Name = model.SchoolName,
-                        Code = Shared.String.GenerateRandom(3, true, false, false, true)
+                        Code = schoolCode
                     }); ;
                     var user = new SchoolUser
                     {
@@ -134,7 +143,7 @@ namespace Schoolozor.Services.Authentication.Controllers
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         School = school,
-
+                        Type = UserType.Admin,
                         InsertedDateTime = DateTime.Now,
                         UpdatedDateTime = DateTime.Now
                     };

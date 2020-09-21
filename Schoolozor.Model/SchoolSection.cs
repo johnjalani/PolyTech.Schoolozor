@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Schoolozor.Model
 {
-    public class SchoolSection : BaseDate
+    public class SchoolSection : BaseContextFields
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public virtual SchoolYear SchoolYear { get; set; }
     }

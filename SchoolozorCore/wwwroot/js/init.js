@@ -33,7 +33,38 @@
             case 'mobile':
                 $(inputs[i]).inputmask('+999999999999');
                 break;
+            case 'zip':
+                $(inputs[i]).inputmask('99999');
+                break;
+
             default:
+                break;
+        }
+    }
+
+    var selects = $('select[data-type]');
+    for (var i = 0; i < selects.length; i++) {
+        switch ($(selects[i]).data('type')) {
+            case 'country':
+                var selectedValue = $(selects[i]).data('selectedvalue');
+                $(selects[i]).append('<option value="">Select</option>');
+                for (var j = 0; j < GetCountries().length; j++) {
+                    if (selectedValue != undefined && GetCountries()[j].value == selectedValue) {
+                        $(selects[i]).append('<option selected value="' + GetCountries()[j].value + '">' + GetCountries()[j].name + '</option>');
+                    } else {
+                        $(selects[i]).append('<option value="' + GetCountries()[j].value + '">' + GetCountries()[j].name + '</option>');
+                    }
+                }
+
+                break;
+        }
+    }
+
+    var buttons = $('button[data-type]');
+    for (var i = 0; i < buttons.length; i++) {
+        switch ($(buttons[i]).data('type')) {
+            case 'confirm':
+                $(buttons[i]).easyconfirm();
                 break;
         }
     }

@@ -11,9 +11,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Schoolozor.Model;
+using Schoolozor.Model.ViewModel;
 using Schoolozor.Services.Authentication.Services;
+using Schoolozor.Services.Level.Services;
+using Schoolozor.Services.Records.Services;
 using Schoolozor.Services.SchoolYear.Services;
 using Schoolozor.Services.Student.Services;
+using Schoolozor.Services.Teacher.Services;
 using Schoolozor.Shared;
 using System.Globalization;
 
@@ -81,6 +85,7 @@ namespace SchoolozorCore
                 options.LoginPath = new PathString("/Account/Login");
             });
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.Configure<GeneralSettings>(Configuration.GetSection("GeneralSettings"));
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -88,6 +93,9 @@ namespace SchoolozorCore
             services.AddTransient<Email>();
             services.AddTransient<StudentServices>();
             services.AddTransient<SchoolYearServices>();
+            services.AddTransient<LevelServices>();
+            services.AddTransient<RecordsServices>();
+            services.AddTransient<TeacherServices>();
             services.AddTransient(typeof(IDataManager<>), typeof(DataManager<>));
         }
 

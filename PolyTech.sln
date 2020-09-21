@@ -21,7 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.Base", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.Student", "Schoolozor.Services.Student\Schoolozor.Services.Student.csproj", "{E5666078-2258-4C3E-8BDE-CD3E127C4AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schoolozor.Services.SchoolYear", "Schoolozor.Services.SchoolYear\Schoolozor.Services.SchoolYear.csproj", "{5CA58A9E-E39A-4689-AFFE-E1F91613E26F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.SchoolYear", "Schoolozor.Services.SchoolYear\Schoolozor.Services.SchoolYear.csproj", "{5CA58A9E-E39A-4689-AFFE-E1F91613E26F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.Level", "Schoolozor.Services.Level\Schoolozor.Services.Level.csproj", "{1D662E7D-951E-48D3-8F5B-FD301199B8D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schoolozor.Services.Records", "Schoolozor.Services.Records\Schoolozor.Services.Records.csproj", "{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schoolozor.Services.Teacher", "Schoolozor.Services.Teacher\Schoolozor.Services.Teacher.csproj", "{B363800C-27A8-4EB8-84BC-79802F8328B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +63,18 @@ Global
 		{5CA58A9E-E39A-4689-AFFE-E1F91613E26F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CA58A9E-E39A-4689-AFFE-E1F91613E26F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CA58A9E-E39A-4689-AFFE-E1F91613E26F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D662E7D-951E-48D3-8F5B-FD301199B8D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D662E7D-951E-48D3-8F5B-FD301199B8D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D662E7D-951E-48D3-8F5B-FD301199B8D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D662E7D-951E-48D3-8F5B-FD301199B8D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B363800C-27A8-4EB8-84BC-79802F8328B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B363800C-27A8-4EB8-84BC-79802F8328B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B363800C-27A8-4EB8-84BC-79802F8328B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B363800C-27A8-4EB8-84BC-79802F8328B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +87,9 @@ Global
 		{F6A3579A-3062-4014-BF56-737A56BFDE61} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
 		{E5666078-2258-4C3E-8BDE-CD3E127C4AF1} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
 		{5CA58A9E-E39A-4689-AFFE-E1F91613E26F} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
+		{1D662E7D-951E-48D3-8F5B-FD301199B8D5} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
+		{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
+		{B363800C-27A8-4EB8-84BC-79802F8328B8} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {349A0B6B-409E-4A08-9B7F-98927814EB75}

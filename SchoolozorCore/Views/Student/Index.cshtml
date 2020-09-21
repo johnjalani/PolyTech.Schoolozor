@@ -6,7 +6,7 @@
     dt.Headers.Add(new DataTableHeaders() { Label = "Email", Field = "email" });
     dt.DataUrl = "/student/getdata";
 
-    dt.Buttons = new List<DataTableButtons>();
-    dt.Buttons.Add(new DataTableButtons() { Label = "Create", Href = "/student/newdata" }); }
+    dt.Controls = new List<DataTableControls>();
+    dt.Controls.Add(new DataTableButton() { Label = "Create", Href = "/student/newdata" }); }
 
 @await Component.InvokeAsync("DataTable", dt)

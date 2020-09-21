@@ -7,7 +7,7 @@
       "destination": "wwwroot/lib/bootstrap/"
     },
     {
-      "library": "jquery@3.4.0",
+      "library": "jquery@3.5.1",
       "destination": "wwwroot/lib/jquery/"
     },
     {
@@ -57,6 +57,10 @@
     {
       "library": "jquery.inputmask@5.0.5",
       "destination": "wwwroot/lib/jquery-inputmask/"
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jqueryui/"
     },
     {
       "provider": "jsdelivr",

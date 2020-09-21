@@ -13,63 +13,82 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="FirstName"></label>
-                                <input type="text" class="form-control" asp-for="FirstName" data-type="toupper" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="MiddleName"></label>
-                                <input type="text" class="form-control" asp-for="MiddleName" data-type="toupper" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="LastName"></label>
-                                <input type="text" class="form-control" asp-for="LastName" data-type="toupper" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="DOB"></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" asp-for="DOB" data-type="date">
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
                                     </div>
+                                    <input type="text" class="form-control" asp-for="FirstName" data-type="toupper" placeholder="First Name">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="Gender"></label>
-                                <select class="form-control" asp-for="Gender">
-                                    <option value="">Select</option>
-                                    <option value="0">Male</option>
-                                    <option value="1">Female</option>
-                                </select>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" asp-for="FirstName" data-type="toupper" placeholder="Middle Name">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="Email"></label>
-                                <input type="text" class="form-control" asp-for="Email" data-type="email" />
+                                <div class="input-group">
+                                    <input type="text" class="form-control" asp-for="LastName" data-type="toupper" placeholder="Last Name">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="Phone"></label>
-                                <input type="text" class="form-control" asp-for="Phone" data-type="phone" />
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-at"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="Email" data-type="email">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="Mobile"></label>
-                                <input type="text" class="form-control" asp-for="Mobile" data-type="mobile" />
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="Phone" data-type="phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-mobile"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="Mobile" data-type="mobile">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-birthday-cake"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="DOB" data-type="date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" asp-for="Gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="0">Male</option>
+                                    <option value="1">Female</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -78,7 +97,7 @@
                 
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary" formaction="NewData" onclick="return confirm('Are you sure?');">Submit</button>
+                    <button type="submit" class="btn btn-primary" formaction="NewData" data-type="confirm">Submit</button>
                 </div>
             </form>
         </div>

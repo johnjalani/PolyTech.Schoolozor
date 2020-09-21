@@ -21,9 +21,8 @@ namespace Schoolozor.Model
         Third,
         Final
     }
-    public class StudentAcademicActivity : BaseDate
+    public class StudentAcademicActivity : BaseContextFields
     {
-        public Guid Id { get; set; }
         public GradingPeriod Period { get; set; }
         public ActivityType Type { get; set; }
         public string Name { get; set; }

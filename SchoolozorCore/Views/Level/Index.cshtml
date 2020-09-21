@@ -1,0 +1,34 @@
+﻿@model Tuple<Guid, List<NameValuePair>>
+
+@{ ViewData["Title"] = "Levels"; }
+@{ var dt = new DataTableModel();
+
+    dt.Headers = new List<DataTableHeaders>();
+    dt.Headers.Add(new DataTableHeaders() { Label = "Name", Field = "name", Type = fieldType.LINK, Api = "/level/editdata?Id=[id]" });
+    dt.Headers.Add(new DataTableHeaders() { Label = "School Year", Field = "schoolYear" });
+
+
+    dt.DataUrl = "/level/getdata/" + Model.Item1;
+    dt.Controls = new List<DataTableControls>();
+    dt.Controls.Add(new DataTableButton() { Label = "Create", Href = "/level/newdata" });
+    //dt.Controls.Add(new DataTableList() { Label = "School Years", Items = Model.Item2 }); 
+
+    }
+
+<div class="form-group">
+    <select class="form-control" asp-for="Item1" onchange="reloadLevel($(this));">
+        <option value="">School Years</option>
+        @foreach (var item in Model.Item2)
+        {
+            <option value="@item.Value">@item.Name</option>
+        }
+    </select>
+</div>
+@await Component.InvokeAsync("DataTable", dt)
+<script>
+    function reloadLevel(ctrl) {
+        if (ctrl.val()) {
+            window.location.href = "/level/" + ctrl.val();
+        }
+    }
+</script>

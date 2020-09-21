@@ -165,6 +165,9 @@ namespace Schoolozor.Model.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SchoolTeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SchoolYearId")
                         .HasColumnType("uniqueidentifier");
 
@@ -172,6 +175,8 @@ namespace Schoolozor.Model.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SchoolTeacherId");
 
                     b.HasIndex("SchoolYearId");
 
@@ -228,6 +233,9 @@ namespace Schoolozor.Model.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SchoolTeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SchoolYearId")
                         .HasColumnType("uniqueidentifier");
 
@@ -236,9 +244,48 @@ namespace Schoolozor.Model.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SchoolTeacherId");
+
                     b.HasIndex("SchoolYearId");
 
                     b.ToTable("SchoolSection");
+                });
+
+            modelBuilder.Entity("Schoolozor.Model.SchoolTeacher", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SchoolTeacher");
                 });
 
             modelBuilder.Entity("Schoolozor.Model.SchoolUser", b =>
@@ -415,6 +462,9 @@ namespace Schoolozor.Model.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("DeletedDateTime")
                         .HasColumnType("datetime2");
 
@@ -441,9 +491,6 @@ namespace Schoolozor.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("DeletedDateTime")
                         .HasColumnType("datetime2");
 
@@ -462,6 +509,15 @@ namespace Schoolozor.Model.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("StudentProfileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
@@ -472,6 +528,8 @@ namespace Schoolozor.Model.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentProfileId");
 
                     b.HasIndex("UserId");
 
@@ -579,8 +637,8 @@ namespace Schoolozor.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AdviserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("AdviserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DeletedDateTime")
                         .HasColumnType("datetime2");
@@ -699,6 +757,10 @@ namespace Schoolozor.Model.Migrations
 
             modelBuilder.Entity("Schoolozor.Model.SchoolLevel", b =>
                 {
+                    b.HasOne("Schoolozor.Model.SchoolTeacher", null)
+                        .WithMany("AssignedLevel")
+                        .HasForeignKey("SchoolTeacherId");
+
                     b.HasOne("Schoolozor.Model.SchoolYear", "SchoolYear")
                         .WithMany()
                         .HasForeignKey("SchoolYearId");
@@ -706,9 +768,20 @@ namespace Schoolozor.Model.Migrations
 
             modelBuilder.Entity("Schoolozor.Model.SchoolSection", b =>
                 {
+                    b.HasOne("Schoolozor.Model.SchoolTeacher", null)
+                        .WithMany("AssignedSection")
+                        .HasForeignKey("SchoolTeacherId");
+
                     b.HasOne("Schoolozor.Model.SchoolYear", "SchoolYear")
                         .WithMany()
                         .HasForeignKey("SchoolYearId");
+                });
+
+            modelBuilder.Entity("Schoolozor.Model.SchoolTeacher", b =>
+                {
+                    b.HasOne("Schoolozor.Model.SchoolUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Schoolozor.Model.SchoolUser", b =>
@@ -734,6 +807,10 @@ namespace Schoolozor.Model.Migrations
 
             modelBuilder.Entity("Schoolozor.Model.StudentGuardian", b =>
                 {
+                    b.HasOne("Schoolozor.Model.StudentProfile", null)
+                        .WithMany("Guardians")
+                        .HasForeignKey("StudentProfileId");
+
                     b.HasOne("Schoolozor.Model.SchoolUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -767,7 +844,7 @@ namespace Schoolozor.Model.Migrations
 
             modelBuilder.Entity("Schoolozor.Model.StudentRecord", b =>
                 {
-                    b.HasOne("Schoolozor.Model.SchoolUser", "Adviser")
+                    b.HasOne("Schoolozor.Model.SchoolTeacher", "Adviser")
                         .WithMany()
                         .HasForeignKey("AdviserId");
 

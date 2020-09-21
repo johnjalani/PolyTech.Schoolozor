@@ -1,0 +1,51 @@
+﻿@model SchoolTeacherViewModel
+@{ ViewData["Title"] = "Teachers"; }
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Add new Teacher</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="post">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="FirstName"></label>
+                                <input type="text" class="form-control" asp-for="FirstName" data-type="toupper" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MiddleName"></label>
+                                <input type="text" class="form-control" asp-for="MiddleName" data-type="toupper" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="LastName"></label>
+                                <input type="text" class="form-control" asp-for="LastName" data-type="toupper" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Position"></label>
+                                <input type="text" class="form-control" asp-for="Position" data-type="toupper" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary" formaction="NewData" data-type="confirm">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

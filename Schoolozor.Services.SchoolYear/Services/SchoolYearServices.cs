@@ -56,6 +56,25 @@ namespace Schoolozor.Services.SchoolYear.Services
             };
         }
 
+        public SchoolYearViewModel GetCurrentSchoolYear(Guid schoolId)
+        {
+            var o = _manager.GetSingle(o => o.DeletedDateTime == null && o.Start <= DateTime.Now && o.End >= DateTime.Now, o => o.School);
+
+            if (o == null)
+            {
+                return null;
+            }
+
+            return new SchoolYearViewModel()
+            {
+                Id = o.Id,
+                Name = o.Name,
+                Start = o.Start,
+                End = o.End,
+                SchoolId = o.School.Id
+            };
+        }
+
         public async Task<ResponseResult<SchoolYearViewModel>> AddSchoolYear(SchoolYearViewModel data, SchoolProfile school)
         {
             await _manager.AddAsync(new Model.SchoolYear()
