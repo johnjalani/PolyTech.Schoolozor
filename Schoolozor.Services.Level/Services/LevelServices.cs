@@ -1,6 +1,7 @@
 ﻿using Schoolozor.Model;
 using Schoolozor.Model.ViewModel.SchoolViewModels;
 using Schoolozor.Shared.Model;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,48 +13,46 @@ namespace Schoolozor.Services.Level.Services
     {
         private readonly IDataManager<Model.SchoolLevel> _manager;
         private readonly IDataManager<Model.SchoolYear> _syManager;
+        private readonly IDataManager<Model.SchoolProfile> _schoolManager;
         private readonly SchoolContext _context;
-        public LevelServices(IDataManager<Model.SchoolLevel> manager, IDataManager<Model.SchoolYear> syManager, SchoolContext context)
+        public LevelServices(IDataManager<Model.SchoolLevel> manager, IDataManager<Model.SchoolYear> syManager, IDataManager<Model.SchoolProfile> schoolManager, SchoolContext context)
         {
             _manager = manager;
             _syManager = syManager;
+            _schoolManager = schoolManager;
             _context = context;
         }
 
         public List<SchoolLevelViewModel> GetSchoolLevels()
         {
-            return _manager.GetAll(o => o.SchoolYear, o => o.SchoolYear.School)
+            return _manager.GetAll(o => o.School)
                 .Select(o => new SchoolLevelViewModel()
                 {
                     Id = o.Id,
                     Name = o.Name,
-                    SchoolId = o.SchoolYear.School.Id,
-                    SchoolYearId = o.SchoolYear.Id
+                    SchoolId = o.School.Id
                 })
                 .ToList();
         }
-        public List<SchoolLevelViewModel> GetSchoolLevels(Guid schoolYearId)
+        public List<SchoolLevelViewModel> GetSchoolLevels(Guid schoolId)
         {
-            return _manager.GetList(o => o.SchoolYear.Id == schoolYearId, o => o.SchoolYear, o => o.SchoolYear.School)
+            return _manager.GetList(o => o.School.Id == schoolId, o => o.School)
                 .Select(o => new SchoolLevelViewModel()
                 {
                     Id = o.Id,
                     Name = o.Name,
-                    SchoolId = o.SchoolYear.School.Id,
-                    SchoolYearId = o.SchoolYear.Id,
-                    SchoolYear = o.SchoolYear.Name
+                    SchoolId = o.School.Id,
                 })
                 .ToList();
         }
         public SchoolLevelViewModel GetSchoolLevel(Guid schoolLevelId)
         {
-            var o = _manager.GetSingle(o => o.Id == schoolLevelId, o => o.SchoolYear, o => o.SchoolYear.School);
+            var o = _manager.GetSingle(o => o.Id == schoolLevelId, o => o.School);
             return new SchoolLevelViewModel()
             {
                 Id = o.Id,
                 Name = o.Name,
-                SchoolId = o.SchoolYear.School.Id,
-                SchoolYearId = o.SchoolYear.Id
+                SchoolId = o.School.Id
             };
                 
         }
@@ -61,14 +60,26 @@ namespace Schoolozor.Services.Level.Services
         {
             using (var trans = _context.Database.BeginTransaction())
             {
-                var sy = _syManager.GetSingle(o => o.Id == data.SchoolYearId);
+                var school = _schoolManager.GetSingle(o => o.Id == data.SchoolId);
 
                 var level = await _manager.AddAsync(new SchoolLevel()
                 {
                     Name = data.Name,
-                    SchoolYear = sy
+                    School = school
                 });
                 data.Id = level.Id;
+                await trans.CommitAsync();
+            }
+
+            return ResponseResult<SchoolLevelViewModel>.SetSuccess(data);
+        }
+        public async Task<ResponseResult<SchoolLevelViewModel>> UpdateSchoolLevel(SchoolLevelViewModel data)
+        {
+            using (var trans = _context.Database.BeginTransaction())
+            {
+                var level = _manager.GetSingle(o => o.Id == data.Id);
+                level.Name = data.Name;
+                await _manager.UpdateAsync(level);
                 await trans.CommitAsync();
             }
 

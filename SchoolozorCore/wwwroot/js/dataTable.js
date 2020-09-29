@@ -49,9 +49,15 @@
                 cols.push({
                     "data": field,
                     "render": function (data, type, row, i) {
-                        var col = dataTable.options.columns[i.row]
+                        var col = dataTable.options.columns[i.row];
+                        var levels = "";
+                        if (data != null) {
+                            for (var j = 0; j < data.length; j++) {
+                                levels += data[j].name + ",";
+                            }
+                        }
                         if (type === 'display') {
-                            return "<span></span>";
+                            return "<span>" + levels + "</span>";
                         } else {
                             return data
                         }

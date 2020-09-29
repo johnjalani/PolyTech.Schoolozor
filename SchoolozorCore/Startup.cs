@@ -19,7 +19,9 @@ using Schoolozor.Services.SchoolYear.Services;
 using Schoolozor.Services.Student.Services;
 using Schoolozor.Services.Teacher.Services;
 using Schoolozor.Shared;
+using Serilog;
 using System.Globalization;
+using System.IO;
 
 namespace SchoolozorCore
 {
@@ -31,6 +33,11 @@ namespace SchoolozorCore
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{Environments.Development}.json", optional: true);
+
+            Log.Logger = new LoggerConfiguration()
+                     .Enrich.FromLogContext()
+                     .WriteTo.File(Path.Combine(env.WebRootPath, "Logs", System.DateTime.Now.ToString("yyyyMMdd") + ".log"))
+                     .CreateLogger();
 
             if (env.IsDevelopment())
             {

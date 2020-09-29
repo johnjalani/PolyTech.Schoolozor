@@ -13,11 +13,6 @@ namespace Schoolozor.Model.ViewModel.SchoolViewModels
         [Required]
         public string Name { get; set; }
         public Guid SchoolId { get; set; }
-        [Required]
-        [Display(Name = "School Year")]
-        public Guid SchoolYearId { get; set; }
-        [Display(Name = "School Year")]
-        public string SchoolYear { get; set; }
         public List<SelectListItem> SchoolYearsSelections { get; set; }
     }
 }

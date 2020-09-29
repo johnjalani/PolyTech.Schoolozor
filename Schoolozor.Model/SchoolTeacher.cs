@@ -10,8 +10,6 @@ namespace Schoolozor.Model
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }
-        public virtual IList<SchoolLevel> AssignedLevel { get; set; }
-        public virtual IList<SchoolSection> AssignedSection { get; set; }
         public virtual SchoolUser User { get; set; }
     }
 }

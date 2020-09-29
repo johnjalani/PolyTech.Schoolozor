@@ -25,9 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.SchoolY
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.Level", "Schoolozor.Services.Level\Schoolozor.Services.Level.csproj", "{1D662E7D-951E-48D3-8F5B-FD301199B8D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schoolozor.Services.Records", "Schoolozor.Services.Records\Schoolozor.Services.Records.csproj", "{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.Records", "Schoolozor.Services.Records\Schoolozor.Services.Records.csproj", "{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schoolozor.Services.Teacher", "Schoolozor.Services.Teacher\Schoolozor.Services.Teacher.csproj", "{B363800C-27A8-4EB8-84BC-79802F8328B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schoolozor.Services.Teacher", "Schoolozor.Services.Teacher\Schoolozor.Services.Teacher.csproj", "{B363800C-27A8-4EB8-84BC-79802F8328B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schoolozor.Services.Section", "Schoolozor.Services.Section\Schoolozor.Services.Section.csproj", "{A67EC1B1-92DC-4AF1-A3E8-CF715B4E7098}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{B363800C-27A8-4EB8-84BC-79802F8328B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B363800C-27A8-4EB8-84BC-79802F8328B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B363800C-27A8-4EB8-84BC-79802F8328B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A67EC1B1-92DC-4AF1-A3E8-CF715B4E7098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A67EC1B1-92DC-4AF1-A3E8-CF715B4E7098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A67EC1B1-92DC-4AF1-A3E8-CF715B4E7098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A67EC1B1-92DC-4AF1-A3E8-CF715B4E7098}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{1D662E7D-951E-48D3-8F5B-FD301199B8D5} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
 		{F5BA434F-E4D1-4A82-9FD3-E9392B3922C1} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
 		{B363800C-27A8-4EB8-84BC-79802F8328B8} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
+		{A67EC1B1-92DC-4AF1-A3E8-CF715B4E7098} = {7B8F55B2-E9FC-471C-A7F2-0BA20540DFB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {349A0B6B-409E-4A08-9B7F-98927814EB75}

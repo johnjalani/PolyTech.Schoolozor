@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Schoolozor.Model;
 
 namespace Schoolozor.Model.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20200927225051_remove_sy_in_LevelAndSection")]
+    partial class remove_sy_in_LevelAndSection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,12 +170,17 @@ namespace Schoolozor.Model.Migrations
                     b.Property<Guid?>("SchoolId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("SchoolTeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolId");
+
+                    b.HasIndex("SchoolTeacherId");
 
                     b.ToTable("SchoolLevel");
                 });
@@ -231,12 +238,17 @@ namespace Schoolozor.Model.Migrations
                     b.Property<Guid?>("SchoolId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("SchoolTeacherId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolId");
+
+                    b.HasIndex("SchoolTeacherId");
 
                     b.ToTable("SchoolSection");
                 });
@@ -750,6 +762,10 @@ namespace Schoolozor.Model.Migrations
                     b.HasOne("Schoolozor.Model.SchoolProfile", "School")
                         .WithMany()
                         .HasForeignKey("SchoolId");
+
+                    b.HasOne("Schoolozor.Model.SchoolTeacher", null)
+                        .WithMany("AssignedLevel")
+                        .HasForeignKey("SchoolTeacherId");
                 });
 
             modelBuilder.Entity("Schoolozor.Model.SchoolSection", b =>
@@ -757,6 +773,10 @@ namespace Schoolozor.Model.Migrations
                     b.HasOne("Schoolozor.Model.SchoolProfile", "School")
                         .WithMany()
                         .HasForeignKey("SchoolId");
+
+                    b.HasOne("Schoolozor.Model.SchoolTeacher", null)
+                        .WithMany("AssignedSection")
+                        .HasForeignKey("SchoolTeacherId");
                 });
 
             modelBuilder.Entity("Schoolozor.Model.SchoolTeacher", b =>

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Schoolozor.Model;
-using Schoolozor.Model.ViewModel;
 using Schoolozor.Model.ViewModel.SchoolViewModels;
 using Schoolozor.Shared;
 using Schoolozor.Shared.Model;
@@ -27,7 +26,7 @@ namespace Schoolozor.Services.Teacher.Services
         }
         public List<SchoolTeacherViewModel> GetTeachers(Guid schoolId)
         {
-            var data =  _manager.GetList(o => o.User.School.Id == schoolId, o => o.User, o => o.User.School)
+            var data = _manager.GetList(o => o.User.School.Id == schoolId, o => o.User, o => o.User.School)
                 .Select(o => new SchoolTeacherViewModel()
                 {
                     Id = o.Id,
@@ -35,11 +34,23 @@ namespace Schoolozor.Services.Teacher.Services
                     MiddleName = o.MiddleName,
                     LastName = o.LastName,
                     Position = o.Position,
-                    UserId = Guid.Parse(o.User.Id),
-                    AssignedLevel = o.AssignedLevel == null ? new List<NameValuePair>() : o.AssignedLevel.Select(i=>new NameValuePair() { Name = i.Name, Value=i.Id }).ToList(),
-                    AssignedSection = o.AssignedSection == null ? new List<NameValuePair>() : o.AssignedSection.Select(i => new NameValuePair() { Name = i.Name, Value = i.Id }).ToList()
+                    UserId = Guid.Parse(o.User.Id)
                 })
                 .ToList();
+            return data;
+        }
+        public SchoolTeacherViewModel GetTeacher(Guid teacherId)
+        {
+            var data = _manager.GetList(o => o.Id == teacherId, o => o.User, o => o.User.School)
+                .Select(o => new SchoolTeacherViewModel()
+                {
+                    Id = o.Id,
+                    FirstName = o.FirstName,
+                    MiddleName = o.MiddleName,
+                    LastName = o.LastName,
+                    Position = o.Position,
+                    UserId = Guid.Parse(o.User.Id)
+                }).FirstOrDefault();
             return data;
         }
         public async Task<ResponseResult<SchoolTeacherViewModel>> AddTeacher(SchoolTeacherViewModel data, SchoolProfile school)
@@ -89,6 +100,22 @@ namespace Schoolozor.Services.Teacher.Services
                     data.Id = teacher.Id;
                     await trans.CommitAsync();
                 }
+            }
+
+            return ResponseResult<SchoolTeacherViewModel>.SetSuccess(data);
+        }
+        public async Task<ResponseResult<SchoolTeacherViewModel>> UpdateTeacher(SchoolTeacherViewModel data, SchoolProfile school)
+        {
+            using (var trans = _context.Database.BeginTransaction())
+            {
+                var teacher = _manager.GetSingle(o => o.Id == data.Id);
+                teacher.LastName = data.LastName;
+                teacher.FirstName = data.FirstName;
+                teacher.MiddleName = data.MiddleName;
+                teacher.Position = data.Position;
+
+                await _manager.UpdateAsync(teacher);
+                await trans.CommitAsync();
             }
 
             return ResponseResult<SchoolTeacherViewModel>.SetSuccess(data);

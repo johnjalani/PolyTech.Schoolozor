@@ -3,15 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Schoolozor.Model;
-using Schoolozor.Model.ViewModel;
 using Schoolozor.Model.ViewModel.SchoolViewModels;
 using Schoolozor.Services.Base.Common;
 using Schoolozor.Services.Base.Controllers;
 using Schoolozor.Services.Level.Services;
 using Schoolozor.Services.SchoolYear.Services;
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,40 +24,23 @@ namespace Schoolozor.Services.Level.Controllers
             _lvl = lvl;
             _sy = sy;
         }
-        [Route("level/{schoolYearId}")]
-        public async Task<IActionResult> Index(Guid schoolYearId)
+        [Route("level/{schoolId}")]
+        public IActionResult Index(Guid schoolId)
         {
             AddPageHeader("Levels");
-            var user = await CurrentUser();
-            var schoolYear = _sy.GetSchoolYear(schoolYearId);
-            var schoolYears = _sy.GetSchoolYears(user.School.Id);
-            if (schoolYear == null)
-            {
-                AddPageAlerts(PageAlertType.Warning, "Please add school years!");
-            }
-            else
-            {
-                AddPageAlerts(PageAlertType.Info, "Copy from the <a href='#'>previous school years?</a>");
-            }
-
-            var syList = new List<NameValuePair>();
-            foreach (var item in schoolYears)
-            {
-                syList.Add(new NameValuePair { Name = item.Name, Value = item.Id });
-            }
-            return View(new Tuple<Guid, List<NameValuePair>>(schoolYearId, syList));
+            return View();
         }
         public async Task<IActionResult> NewData()
         {
+            var user = await CurrentUser();
+
             AddPageHeader("Levels");
-            AddBreadcrumb("Levels", "/level");
+            AddBreadcrumb("Levels", "/level/" + user.School.Id);
             AddBreadcrumb("[New]", "");
 
-            var user = await CurrentUser();
+            
             var model = new SchoolLevelViewModel();
-            model.SchoolYearsSelections = _sy.GetSchoolYears(user.School.Id)
-                                           .Select(o => new SelectListItem() { Text = o.Name, Value = o.Id.ToString() })
-                                           .ToList();
+            model.SchoolId = user.School.Id;
 
             return View(model);
         }
@@ -92,7 +72,38 @@ namespace Schoolozor.Services.Level.Controllers
 
             return View(model);
         }
+        public async Task<IActionResult> EditData(Guid Id)
+        {
+            var user = await CurrentUser();
+            var data = _lvl.GetSchoolLevel(Id);
 
+            AddPageHeader("Levels");
+            AddBreadcrumb("Levels", "/level/" + user.School.Id);
+            AddBreadcrumb(data.Name, "");
+            return View(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditData(SchoolLevelViewModel data)
+        {
+            var user = await CurrentUser();
+            if (Validate())
+            {
+                var result = await _lvl.UpdateSchoolLevel(data);
+                if (result.Succeeded)
+                {
+                    AddPageAlerts(PageAlertType.Success, "Updating level " + data.Name + " succeeded!");
+                }
+                else
+                {
+                    AddPageAlerts(PageAlertType.Warning, result.Error.Description);
+                }
+            }
+            AddPageHeader("Levels");
+            AddBreadcrumb("Levels", "/level/" + user.School.Id);
+            AddBreadcrumb(data.Name, "");
+            return View(data);
+        }
         public IActionResult Success(string message)
         {
             AddPageAlerts(PageAlertType.Success, message);
@@ -107,29 +118,9 @@ namespace Schoolozor.Services.Level.Controllers
             try
             {
                 var user = await CurrentUser();
-                var schoolYear = _sy.GetCurrentSchoolYear(user.School.Id);
-                if (schoolYear != null)
-                {
-                    return this.BuildDataTableForm<SchoolLevelViewModel>(_lvl.GetSchoolLevels(schoolYear.Id));
-                }
-                else
-                {
-                    return Json(new List<SchoolLevelViewModel>());
-                }
-            }
-            catch (Exception ex)
-            {
-                // Info
-                Console.Write(ex);
-                return null;
-            }
-        }
-        [Route("level/getdata/{schoolYearId}")]
-        public IActionResult GetData(Guid schoolYearId)
-        {
-            try
-            {
-                return this.BuildDataTableForm<SchoolLevelViewModel>(_lvl.GetSchoolLevels(schoolYearId));
+
+                return this.BuildDataTableForm<SchoolLevelViewModel>(_lvl.GetSchoolLevels(user.School.Id));
+
             }
             catch (Exception ex)
             {

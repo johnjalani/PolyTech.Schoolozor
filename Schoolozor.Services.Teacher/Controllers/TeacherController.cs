@@ -5,8 +5,10 @@ using Schoolozor.Model;
 using Schoolozor.Model.ViewModel.SchoolViewModels;
 using Schoolozor.Services.Base.Common;
 using Schoolozor.Services.Base.Controllers;
+using Schoolozor.Services.Records.Services;
 using Schoolozor.Services.Teacher.Services;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Schoolozor.Services.Teacher.Controllers
@@ -15,12 +17,14 @@ namespace Schoolozor.Services.Teacher.Controllers
     public class TeacherController : BaseController
     {
         private readonly TeacherServices _teacher;
-        public TeacherController(TeacherServices teacher, UserManager<SchoolUser> userManager) : base(userManager)
+        private readonly RecordsServices _records;
+        public TeacherController(TeacherServices teacher, RecordsServices records, UserManager<SchoolUser> userManager) : base(userManager)
         {
             _teacher = teacher;
+            _records = records;
         }
         [Route("teacher/{schoolId}")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             AddPageHeader("Teachers");
             return View();
@@ -59,6 +63,38 @@ namespace Schoolozor.Services.Teacher.Controllers
 
             return View();
         }
+        public async Task<IActionResult> EditData(Guid Id)
+        {
+            var user = await CurrentUser();
+            var data = _teacher.GetTeacher(Id);
+
+            AddPageHeader("Teachers");
+            AddBreadcrumb("Teachers", "/teacher/" + user.School.Id);
+            AddBreadcrumb(data.FullName, "");
+            return View(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditData(SchoolTeacherViewModel data)
+        {
+            var user = await CurrentUser();
+            if (Validate())
+            {
+                var result = await _teacher.UpdateTeacher(data, user.School);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Success", new { message = "Updating teacher " + data.FullName + " succeeded!" });
+                }
+                else
+                {
+                    AddPageAlerts(PageAlertType.Warning, result.Error.Description);
+                }
+            }
+            AddPageHeader("Teachers");
+            AddBreadcrumb("Teachers", "/teacher/" + user.School.Id);
+            AddBreadcrumb(data.FullName, "");
+            return View(data);
+        }
         public async Task<IActionResult> Success(string message)
         {
             AddPageAlerts(PageAlertType.Success, message);
@@ -74,7 +110,8 @@ namespace Schoolozor.Services.Teacher.Controllers
             try
             {
                 var user = await CurrentUser();
-                return this.BuildDataTableForm<SchoolTeacherViewModel>(_teacher.GetTeachers(user.School.Id));
+                var teachers = _teacher.GetTeachers(user.School.Id);
+                return this.BuildDataTableForm<SchoolTeacherViewModel>(teachers);
             }
             catch (Exception ex)
             {

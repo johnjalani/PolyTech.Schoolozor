@@ -51,14 +51,15 @@ namespace Schoolozor.Services.Base.Common
             };
         }
 
-        public static SidebarMenu AddModule(string name, string path, string icon)
+        public static SidebarMenu AddModule(string name, string path, string icon, string group)
         {
             return new SidebarMenu {
                 Type = SidebarMenuType.Link,
                 Name = name,
                 IconClassName = icon,
                 URLPath = path,
-                LinkCounter = Tuple.Create(0, 0, 0)
+                LinkCounter = Tuple.Create(0, 0, 0),
+                Group = group
             };
         }
         public static SidebarMenu AddModule(Module module, Tuple<int, int, int> counter = null)

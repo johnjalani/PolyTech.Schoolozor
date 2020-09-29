@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Schoolozor.Shared.Model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -26,7 +26,5 @@ namespace Schoolozor.Model.ViewModel.SchoolViewModels
         [Required]
         public string Position { get; set; }
         public Guid UserId { get; set; }
-        public List<NameValuePair> AssignedLevel { get; set; }
-        public List<NameValuePair> AssignedSection { get; set; }
     }
 }

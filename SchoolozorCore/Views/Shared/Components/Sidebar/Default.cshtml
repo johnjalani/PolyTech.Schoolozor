@@ -66,7 +66,7 @@
                         {
                             var active = string.Empty;
                             var menuopen = string.Empty;
-                            if (menu.TreeChild.Any(x => @Context.Request.Path.Value.Contains(x.URLPath)))
+                            if (menu.TreeChild.Any(x => @Context.Request.Path.Value.Contains(x.Group)))
                             {
                                 active = "active";
                                 menuopen = "menu-open";
@@ -80,7 +80,7 @@
                                     @foreach (SidebarMenu subMenu in menu.TreeChild)
                                     {
                                         active = string.Empty;
-                                        if (Context.Request.Path.Value.EndsWith(subMenu.URLPath))
+                                        if (Context.Request.Path.Value.Contains(subMenu.Group))
                                         {
                                             active = "active";
                                         }

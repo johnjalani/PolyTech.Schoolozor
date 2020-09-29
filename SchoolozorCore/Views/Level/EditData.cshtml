@@ -4,12 +4,16 @@
     <div class="col-md-12">
         <div class="card card-secondary">
             <div class="card-header">
-                <h3 class="card-title">Add new Level</h3>
+                <h3 class="card-title">Update Level</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" method="post">
                 <div class="card-body">
+                    <div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="SchoolId" />
+                    </div>
                     <div class="form-group">
                         <label asp-for="Name"></label>
                         <input type="text" class="form-control" asp-for="Name" data-type="toupper" />
@@ -18,7 +22,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary" formaction="newdata" value="new" data-type="confirm">Submit</button>
+                    <button type="submit" class="btn btn-primary" formaction="editdata" value="edit" data-type="confirm">Submit</button>
                 </div>
             </form>
         </div>
