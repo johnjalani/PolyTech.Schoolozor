@@ -1,0 +1,21 @@
+﻿
+@{ ViewData["Title"] = "Levels"; }
+@{ var dt = new DataTableModel();
+
+    dt.Headers = new List<DataTableHeaders>();
+    dt.Headers.Add(new DataTableHeaders() { Label = "Name", Field = "name", Type = fieldType.LINK, Api = "/level/editdata?Id=[id]" });
+
+
+    dt.DataUrl = "/level/getdata/";
+    dt.Controls = new List<DataTableControls>();
+    dt.Controls.Add(new DataTableButton() { Label = "Create", Href = "/level/newdata" });
+    }
+
+@await Component.InvokeAsync("DataTable", dt)
+<script>
+    function reloadLevel(ctrl) {
+        if (ctrl.val()) {
+            window.location.href = "/level/" + ctrl.val();
+        }
+    }
+</script>

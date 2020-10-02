@@ -1,16 +1,22 @@
-﻿
-@{ var model = new DataTableModel();
-                model.Headers = new List<DataTableHeaders>();
-                model.Headers.Add(new DataTableHeaders() { Label = "Sr", Field = "sr" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Order Track Number", Field = "ordertracknumber" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Quantity", Field = "quantity:text-center" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Product Name", Field = "productname" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Special Offer", Field = "specialoffer" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Unit Price", Field = "unitprice" });
-                model.Headers.Add(new DataTableHeaders() { Label = "Unit Price Discount", Field = "unitpricediscount" });
-                model.DataUrl = "/Home/GetData"; }
+﻿    <div class="box">
+        <div class="box-body table-responsive">
+            <table class="table table-striped jambo_table table-hover" id="TableId" cellspacing="0" align="center">
+                <thead>
+                    <tr class="headings">
 
-@await Component.InvokeAsync("DataTable", model)
+                        <th>sr</th>
+                        <th>ordertracknumber</th>
+                        <th>quantity</th>
+                        <th>productname</th>
+                        <th>specialoffer</th>
+                        <th>unitprice</th>
+                        <th>unitpricediscount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 <div class="box">
     <div class="box-body">
         <form asp-controller="Home" asp-action="Index" method="post">
@@ -20,3 +26,75 @@
         </form>
     </div>
 </div>
+<environment names="Development">
+    <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.css" asp-append-version="true" />
+</environment>
+<environment names="Staging,Production">
+    <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.min.css" asp-append-version="true" />
+</environment>
+
+<environment names="Development">
+    <script src="~/lib/datatables/js/jquery.dataTables.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js" asp-append-version="true"></script>
+    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+</environment>
+<script>
+    $(function () {
+        $('#TableId').DataTable(
+            {
+                searchDelay: 500,
+                "columnDefs": [
+                    { "width": "5%", "targets": [0] },
+                    { "className": "text-center", "targets": [0, 1, 2, 3, 4, 5, 6] },
+                    { "defaultContent": "<button class='btn btn-primary btn-sm'>Details</button>", "targets": [7] },
+                    { "searchable": false, "targets": [0, 2, 4, 5, 6] },
+                    {
+                        "render": function (data, type, row) {
+                            return ' <label class="badge label-primary">' + data + '</label>';
+                        },
+                        "targets": [4]
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            if (row['quantity'] > 1)
+                                return ' <label class="badge label-success">' + row['quantity'] + '</label>'
+                            else
+                                return ' <label class="badge label-default">' + row['quantity'] + '</label>';
+                        },
+                        "targets": [2]
+                    },
+                ],
+                "language":
+                {
+                    "processing": "<div class=''><i class='fa fa-cog fa-spin site-loader-color'></i></div>",
+                    "search": "filter",
+                    "searchPlaceholder": "track num or product"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ajax":
+                {
+                    "url": "/Home/GetData",
+                    "type": "POST",
+                    "dataType": "JSON"
+                },
+                "columns": [
+                    { "data": "sr" },
+                    { "data": "orderTrackNumber" },
+                    { "data": "quantity" },
+                    { "data": "productName" },
+                    { "data": "specialOffer" },
+                    { "data": "unitPrice" },
+                    { "data": "unitPriceDiscount" },
+                ],
+                "dom": "<'row'<'col-sm-6'l><'col-sm-6'<'#buttonContainer.site-datatable-button-container'>f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            });
+
+        $("#buttonContainer").addClass("float-right").append("<button class='btn btn-sm bg-success'>Create</button>");
+    });
+</script>

@@ -1,0 +1,105 @@
+﻿@model StudentViewModel
+@{ ViewData["Title"] = "Students"; }
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Add new Student</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" method="post">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="FirstName" data-type="toupper" placeholder="First Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" asp-for="FirstName" data-type="toupper" placeholder="Middle Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" asp-for="LastName" data-type="toupper" placeholder="Last Name">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-at"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="Email" data-type="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="Phone" data-type="phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-mobile"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="Mobile" data-type="mobile">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-birthday-cake"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" asp-for="DOB" data-type="date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" asp-for="Gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="0">Male</option>
+                                    <option value="1">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary" formaction="NewData" data-type="confirm">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

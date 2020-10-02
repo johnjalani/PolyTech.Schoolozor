@@ -1,17 +1,15 @@
 ﻿@model DataTableModel
-@{ 
-    var tableId = Guid.NewGuid().ToString();
-}
+@{ var tableId = Guid.NewGuid().ToString(); }
 
 <div class="box">
     <div class="box-body table-responsive">
-        <table class="table table-striped jambo_table table-hover" id="@tableId" cellspacing="0" align="center">
+        <table class="table table-striped jambo_table table-hover table-condensed" id="@tableId" cellspacing="0" align="center">
             <thead>
                 <tr class="headings">
                     @foreach (var h in Model.Headers)
                     {
-                    <th>@h.Label</th>
-                    }
+        <th>@h.Label</th>
+}
 
                 </tr>
             </thead>
@@ -41,14 +39,31 @@
         var cols = [];
         @foreach (var c in Model.Headers)
         {
-            @:cols.push("@c.Field");
+            @:cols.push({Field : "@c.Field", Label : "@c.Label", Type : "@c.Type", Api : "@c.Api", CssClass : "@c.CssClass"});
         }
-
 
         dataTable.options.ctrlId = "@tableId";
         dataTable.options.columns = cols;
         dataTable.options.url = '@Model.DataUrl';
         dataTable.generate();
-        //dataTable.addButton('Create', function () { alert('aa'); });
+
+
+        @if (Model.Controls != null)
+        {
+            foreach (var b in Model.Controls)
+            {
+                switch (b.Type)
+                {
+                    case "Button":
+                        @:dataTable.addButton("@(((DataTableButton)b).Label)", "@(((DataTableButton)b).Href)");
+                        break;
+                    case "List":
+                        @:dataTable.addList("@(((DataTableList)b).Label)", @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(((DataTableList)b).Items))));
+                    break;
+                }
+
+            }
+        }
+
     });
 </script>

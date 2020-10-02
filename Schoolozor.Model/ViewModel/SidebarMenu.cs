@@ -12,6 +12,7 @@ namespace Schoolozor.Model.ViewModel
         public string URLPath { get; set; }
         public List<SidebarMenu> TreeChild { get; set; }
         public Tuple<int, int, int> LinkCounter  { get; set; }
+        public string Group { get; set; }
     }
 
     public enum SidebarMenuType

@@ -17,6 +17,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="stylesheet" href="~/lib/ionicons/css/ionicons.css" />
         <link rel="stylesheet" href="~/lib/admin-lte/dist/css/adminlte.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+        <link href="~/lib/jqueryui/jquery-ui.css" rel="stylesheet" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
@@ -24,6 +26,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="stylesheet" href="~/lib/ionicons/css/ionicons.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/admin-lte/dist/css/adminlte.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" asp-append-version="true" />
+        <link href="~/lib/jqueryui/jquery-ui.min.css" rel="stylesheet" />
     </environment>
 
     <environment names="Development">
@@ -33,7 +37,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="~/lib/pace/pace.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/lib/momentjs/moment.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
         <script src="~/js/dataFormatting.js" asp-append-version="true"></script>
+        <script src="~/js/init.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-inputmask/jquery.inputmask.js"></script>
+        <script src="~/lib/easyConfirm/easyConfirm.js"></script>
+        <script src="~/lib/jqueryui/jquery-ui.js"></script>
+        <script src="~/js/lookup.js"></script>
 
     </environment>
     <environment names="Staging,Production">
@@ -43,7 +53,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="~/lib/pace/pace.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/lib/momentjs/moment.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-daterangepicker/daterangepicker.min.js" asp-append-version="true"></script>
         <script src="~/js/dataFormatting.js" asp-append-version="true"></script>
+        <script src="~/js/init.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-inputmask/jquery.inputmask.min.js"></script>
+        <script src="~/lib/easyConfirm/easyConfirm.js"></script>
+        <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+        <script src="~/js/lookup.js"></script>
     </environment>
 
 </head>
@@ -92,9 +108,9 @@ desired effect
         <!-- /.content-wrapper -->
         <!-- Main Footer -->
         @await Component.InvokeAsync("Footer")
-        <!-- Control Sidebar -->
-        @await Component.InvokeAsync("ControlSidebar")
-        <!-- /.control-sidebar -->
+        <!-- Confirm Modal -->
+        <partial name="ConfirmModal" />
+        <!-- /.confirm.modal -->
         <!-- Add the sidebar's background. This div must be placed
              immediately after the control sidebar -->
     <aside class="control-sidebar control-sidebar-dark">

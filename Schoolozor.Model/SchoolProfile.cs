@@ -5,13 +5,14 @@ using System.Text;
 
 namespace Schoolozor.Model
 {
-    public class SchoolProfile
+    public class SchoolProfile : BaseContextFields
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string ContactNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<SchoolUser> Users { get; set; }
+        public string Code { get; set; }
+        public virtual IList<SchoolUser> Users { get; set; }
+        public virtual IList<SchoolYear> SchoolYears { get; set; }
     }
 }

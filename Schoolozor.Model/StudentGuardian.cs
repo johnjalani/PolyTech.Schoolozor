@@ -16,9 +16,8 @@ namespace Schoolozor.Model
         Guardian
     }
 
-    public class StudentGuardian
+    public class StudentGuardian : BaseContextFields
     {
-        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -26,14 +25,14 @@ namespace Schoolozor.Model
         {
             get
             {
+
                 return $"{FirstName.ToProperCase()} {(!string.IsNullOrEmpty(MiddleName) ? MiddleName.ToProperCase().Substring(0, 1) : string.Empty)} {LastName.ToProperCase()}";
             }
         }
-        public DateTime DOB { get; set; }
         public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Mobile { get; set; }
         public GuardianType type { get; set; }
-        public SchoolUser User { get; set; }
-        public DateTime InsertDateTime { get; set; }
-        public DateTime UpdateDateTime { get; set; }
+        public virtual SchoolUser User { get; set; }
     }
 }

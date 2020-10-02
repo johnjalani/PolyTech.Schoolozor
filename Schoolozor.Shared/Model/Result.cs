@@ -9,8 +9,8 @@ namespace Schoolozor.Shared.Model
 {
     public class ResponseResult<T>
     {
-        public bool Succeed { get; set; }
-        public T Data { get; set; }
+        public bool Succeeded { get; set; }
+        public T Entity { get; set; }
         public Error Error { get; set; }
         public override string ToString()
         {
@@ -21,8 +21,8 @@ namespace Schoolozor.Shared.Model
         {
             var model = new ResponseResult<T>
             {
-                Succeed = true,
-                Data = data,
+                Succeeded = true,
+                Entity = data,
                 Error = null
             };
             Log.Information(Newtonsoft.Json.JsonConvert.SerializeObject(model));
@@ -32,8 +32,8 @@ namespace Schoolozor.Shared.Model
         {
             var model = new ResponseResult<T>
             {
-                Succeed = false,
-                Data = default(T),
+                Succeeded = false,
+                Entity = default(T),
                 Error = new Error
                 {
                     Description = description,
@@ -47,8 +47,8 @@ namespace Schoolozor.Shared.Model
         {
             var model = new ResponseResult<T>
             {
-                Succeed = false,
-                Data = data,
+                Succeeded = false,
+                Entity = data,
                 Error = new Error
                 {
                     Description = description,

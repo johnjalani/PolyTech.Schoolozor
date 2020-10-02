@@ -1,6 +1,7 @@
 ﻿using Blazor.IndexedDB.WebAssembly;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.JSInterop;
 using Schoolozor.Model.ViewModel;
 
@@ -25,8 +26,16 @@ namespace Schoolozor.Model
         }
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
         {
-
+            
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies()
+            .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning));
+        }
+
+        public DbSet<StudentMasterList> StudentMasterList { get; set; }
         public DbSet<SchoolProfile> SchoolProfile { get; set; }
         public DbSet<UserAudit> UserAuditEvents { get; set; }
         public DbSet<SchoolUser> SchoolUser { get; set; }
@@ -35,5 +44,8 @@ namespace Schoolozor.Model
         public DbSet<StudentProfile> StudentProfile { get; set; }
         public DbSet<StudentRecord> StudentRecord { get; set; }
         public DbSet<StudentAcademicActivity> StudentAcademicActivity { get; set; }
+        public DbSet<SchoolYear> SchoolYear { get; set; }
+        public DbSet<SchoolLevel> SchoolLevel { get; set; }
+        public DbSet<SchoolSection> SchoolSection { get; set; }
     }
 }

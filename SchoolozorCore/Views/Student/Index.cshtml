@@ -1,0 +1,12 @@
+﻿@{ ViewData["Title"] = "Students"; }
+@{ var dt = new DataTableModel();
+    dt.Headers = new List<DataTableHeaders>();
+    dt.Headers.Add(new DataTableHeaders() { Label = "StudentID", Field = "studentId", Type = fieldType.LINK, Api = "/student/editdata?Id=[id]" });
+    dt.Headers.Add(new DataTableHeaders() { Label = "Name", Field = "fullName" });
+    dt.Headers.Add(new DataTableHeaders() { Label = "Email", Field = "email" });
+    dt.DataUrl = "/student/getdata";
+
+    dt.Controls = new List<DataTableControls>();
+    dt.Controls.Add(new DataTableButton() { Label = "Create", Href = "/student/newdata" }); }
+
+@await Component.InvokeAsync("DataTable", dt)

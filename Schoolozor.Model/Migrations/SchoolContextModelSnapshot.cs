@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Schoolozor.Model;
 
 namespace Schoolozor.Model.Migrations
@@ -15,32 +15,33 @@ namespace Schoolozor.Model.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -49,18 +50,18 @@ namespace Schoolozor.Model.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -73,18 +74,18 @@ namespace Schoolozor.Model.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -96,17 +97,17 @@ namespace Schoolozor.Model.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -118,10 +119,10 @@ namespace Schoolozor.Model.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -133,113 +134,224 @@ namespace Schoolozor.Model.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Schoolozor.Model.SchoolLevel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SchoolId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("SchoolLevel");
+                });
+
             modelBuilder.Entity("Schoolozor.Model.SchoolProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("SchoolProfile");
                 });
 
+            modelBuilder.Entity("Schoolozor.Model.SchoolSection", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SchoolId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("SchoolSection");
+                });
+
+            modelBuilder.Entity("Schoolozor.Model.SchoolTeacher", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SchoolTeacher");
+                });
+
             modelBuilder.Entity("Schoolozor.Model.SchoolUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<Guid?>("SchoolId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<int>("Type")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -249,39 +361,77 @@ namespace Schoolozor.Model.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("SchoolId");
 
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Schoolozor.Model.SchoolYear", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SchoolId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.ToTable("SchoolYear");
+                });
+
             modelBuilder.Entity("Schoolozor.Model.StudentAcademicActivity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("InsertDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Period")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Score")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<Guid?>("StudentRecordId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -294,25 +444,31 @@ namespace Schoolozor.Model.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("InsertDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Province")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Zip")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -323,37 +479,43 @@ namespace Schoolozor.Model.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("InsertDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("StudentProfileId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdateDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("type")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -364,56 +526,95 @@ namespace Schoolozor.Model.Migrations
                     b.ToTable("StudentGuardian");
                 });
 
+            modelBuilder.Entity("Schoolozor.Model.StudentMasterList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("SchoolYearId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolYearId");
+
+                    b.ToTable("StudentMasterList");
+                });
+
             modelBuilder.Entity("Schoolozor.Model.StudentProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CurrentAddressId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DOB")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("InsertDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mobile")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PermanentAddressId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<Guid?>("SchoolId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CurrentAddressId");
 
                     b.HasIndex("PermanentAddressId");
+
+                    b.HasIndex("SchoolId");
 
                     b.HasIndex("UserId");
 
@@ -424,27 +625,44 @@ namespace Schoolozor.Model.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AdviserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("GPA")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,4)");
 
-                    b.Property<DateTime>("InsertDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("InsertedDateTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Level")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("LevelId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("SchoolYear")
-                        .HasColumnType("text");
+                    b.Property<Guid?>("SchoolYearId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SectionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("StudentProfileId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdateDateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdviserId");
+
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("SchoolYearId");
+
+                    b.HasIndex("SectionId");
 
                     b.HasIndex("StudentProfileId");
 
@@ -455,21 +673,21 @@ namespace Schoolozor.Model.Migrations
                 {
                     b.Property<int>("UserAuditId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AuditEvent")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("IpAddress")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserAuditId");
 
@@ -527,10 +745,38 @@ namespace Schoolozor.Model.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Schoolozor.Model.SchoolLevel", b =>
+                {
+                    b.HasOne("Schoolozor.Model.SchoolProfile", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId");
+                });
+
+            modelBuilder.Entity("Schoolozor.Model.SchoolSection", b =>
+                {
+                    b.HasOne("Schoolozor.Model.SchoolProfile", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId");
+                });
+
+            modelBuilder.Entity("Schoolozor.Model.SchoolTeacher", b =>
+                {
+                    b.HasOne("Schoolozor.Model.SchoolUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Schoolozor.Model.SchoolUser", b =>
                 {
                     b.HasOne("Schoolozor.Model.SchoolProfile", "School")
                         .WithMany("Users")
+                        .HasForeignKey("SchoolId");
+                });
+
+            modelBuilder.Entity("Schoolozor.Model.SchoolYear", b =>
+                {
+                    b.HasOne("Schoolozor.Model.SchoolProfile", "School")
+                        .WithMany("SchoolYears")
                         .HasForeignKey("SchoolId");
                 });
 
@@ -552,6 +798,13 @@ namespace Schoolozor.Model.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("Schoolozor.Model.StudentMasterList", b =>
+                {
+                    b.HasOne("Schoolozor.Model.SchoolYear", "SchoolYear")
+                        .WithMany()
+                        .HasForeignKey("SchoolYearId");
+                });
+
             modelBuilder.Entity("Schoolozor.Model.StudentProfile", b =>
                 {
                     b.HasOne("Schoolozor.Model.StudentAddress", "CurrentAddress")
@@ -562,6 +815,10 @@ namespace Schoolozor.Model.Migrations
                         .WithMany()
                         .HasForeignKey("PermanentAddressId");
 
+                    b.HasOne("Schoolozor.Model.SchoolProfile", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId");
+
                     b.HasOne("Schoolozor.Model.SchoolUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -569,6 +826,22 @@ namespace Schoolozor.Model.Migrations
 
             modelBuilder.Entity("Schoolozor.Model.StudentRecord", b =>
                 {
+                    b.HasOne("Schoolozor.Model.SchoolTeacher", "Adviser")
+                        .WithMany()
+                        .HasForeignKey("AdviserId");
+
+                    b.HasOne("Schoolozor.Model.SchoolLevel", "Level")
+                        .WithMany()
+                        .HasForeignKey("LevelId");
+
+                    b.HasOne("Schoolozor.Model.SchoolYear", "SchoolYear")
+                        .WithMany()
+                        .HasForeignKey("SchoolYearId");
+
+                    b.HasOne("Schoolozor.Model.SchoolSection", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId");
+
                     b.HasOne("Schoolozor.Model.StudentProfile", null)
                         .WithMany("Records")
                         .HasForeignKey("StudentProfileId");

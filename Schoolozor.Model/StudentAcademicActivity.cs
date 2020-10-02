@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Schoolozor.Model
@@ -20,14 +21,12 @@ namespace Schoolozor.Model
         Third,
         Final
     }
-    public class StudentAcademicActivity
+    public class StudentAcademicActivity : BaseContextFields
     {
-        public Guid Id { get; set; }
         public GradingPeriod Period { get; set; }
         public ActivityType Type { get; set; }
         public string Name { get; set; }
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Score { get; set; }
-        public DateTime InsertDateTime { get; set; }
-        public DateTime UpdateDateTime { get; set; }
     }
 }

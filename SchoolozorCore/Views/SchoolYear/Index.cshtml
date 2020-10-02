@@ -1,0 +1,12 @@
+﻿@{ ViewData["Title"] = "School Years"; }
+@{ var dt = new DataTableModel();
+    dt.Headers = new List<DataTableHeaders>();
+    dt.Headers.Add(new DataTableHeaders() { Label = "Name", Field = "name", Type = fieldType.LINK, Api = "/schoolyear/editdata?Id=[id]" });
+    dt.Headers.Add(new DataTableHeaders() { Label = "Start", Field = "Start", Type = fieldType.DATE });
+    dt.Headers.Add(new DataTableHeaders() { Label = "End", Field = "End", Type = fieldType.DATE });
+
+    dt.DataUrl = "/SchoolYear/GetData";
+    dt.Controls = new List<DataTableControls>();
+    dt.Controls.Add(new DataTableButton() { Label = "Create", Href = "/schoolyear/newdata" }); }
+
+@await Component.InvokeAsync("DataTable", dt)
