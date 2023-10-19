@@ -9,6 +9,5 @@ namespace Schoolozor.Model
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public virtual SchoolProfile School { get; set; }
-        public string Description { get; set; }
     }
 }
