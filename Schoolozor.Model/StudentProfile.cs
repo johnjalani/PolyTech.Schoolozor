@@ -29,6 +29,6 @@ namespace Schoolozor.Model
         public virtual IList<StudentGuardian> Guardians { get; set; }
         //public virtual StudentMasterList MasterList { get; set; }
 
-
+        public string Nickname { get; set; }
     }
 }
